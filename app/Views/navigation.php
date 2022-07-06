@@ -8,7 +8,7 @@
     <title>Navigation Bar</title>
     </head>
     <body>
-        <?php $session = 1; ?>
+        <?php $variable = 1; ?>
     <nav class="navbar navbar-expand-lg navbar-light" style="background-color:#39b6bc;">
         <div class="container-fluid">
             <?php if($session==1){?>   
