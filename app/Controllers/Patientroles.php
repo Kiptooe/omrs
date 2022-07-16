@@ -1,11 +1,15 @@
 <?php
 
 namespace App\Controllers;
+use App\Models\tbl_vitals;
 
 class Patientroles extends BaseController
 {
-    public function index()
+    public function showVitals($page,$id)
     {
-        return view('navigation');
+        $tv = new tbl_vitals();
+        $vitals['vitals'] = $tv->fetchVitals($id);
+        
+        echo view($page,$vitals);
     }
 }
