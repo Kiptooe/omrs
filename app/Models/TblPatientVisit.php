@@ -4,7 +4,7 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class tbl_patient_visit extends Model{
+class TblPatientVisit extends Model{
     
 protected $table = 'tbl_patient_visit';
 protected $primaryKey = 'visit_id';

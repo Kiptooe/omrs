@@ -1,8 +1,8 @@
 <?php
 
 namespace App\Controllers;
-use App\Models\tbl_vitals;
-use App\Models\Tblsignsymp;
+use App\Models\TblVitals;
+use App\Models\TblSignSymp;
 
 class Patientroles extends BaseController
 {

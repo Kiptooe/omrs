@@ -4,7 +4,7 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class Tbl_Admin extends Model
+class TblAdmin extends Model
 {
 	protected $DBGroup              = 'default'; // default database group
   
