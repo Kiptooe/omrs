@@ -2,14 +2,21 @@
 
 namespace App\Controllers;
 use App\Models\tbl_vitals;
+use App\Models\Tblsignsymp;
 
 class Patientroles extends BaseController
 {
-    public function showVitals($page,$id)
+    public function getSummary($page,$id)
     {
+
         $tv = new tbl_vitals();
-        $vitals['vitals'] = $tv->fetchVitals($id);
-        
-        echo view($page,$vitals);
+        $summary['vitals'] = $tv->fetchVitals($id);
+
+        $ts = new Tblsignsymp();
+
+        $summary['sign_symp'] = $ts->fetchSignSymp($id);
+
+        echo view($page,$summary);
+
     }
 }

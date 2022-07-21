@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <link rel="stylesheet" href="kipstyle.css">
+    <link rel="stylesheet" href="/kipstyle.css">
     <title>Navigation Bar</title>
     </head>
         <body>
@@ -12,7 +12,7 @@
         <nav class="navbar navbar-expand-lg navbar-light" style="background-color:#39b6bc;">
             <div class="container-fluid">
                     <?php if($user['role_id']==1){?>   
-                            <a class="navbar-brand" href="#"><image src="images\patient.png" alt="Patient" width="40px" height="40px"></a>
+                            <a class="navbar-brand" href="#"><image src="/images/patient.png" alt="Patient" width="40px" height="40px"></a>
                             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
                                 <span class="navbar-toggler-icon"></span>
                             </button>
@@ -21,7 +21,7 @@
                                 <li class="nav-item dropdown">
                                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Visit Summary</a>
                                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                                <a class="dropdown-item" href="/patientroles/showVitals/visitsummary/<?php echo $user['id'];?>">Vitals</a>
+                                                <a class="dropdown-item" href="/Patientroles/summary/visitsummary/<?php echo $user['id'];?>">Vitals</a>
                                                 <a class="dropdown-item" href="/Adminroles/medicineAvailable">Signs&Symptoms</a>
                                         </div>
                                 </li>
@@ -33,7 +33,7 @@
                                     </li>
                                      
                                     <?php } elseif($user['role_id']==2) {?>   
-                            <a class="navbar-brand" href="#"><image src="images\admin.png" alt="Admin" width="40px" height="40px"></a>
+                            <a class="navbar-brand" href="#"><image src="/images/admin.png" alt="Admin" width="40px" height="40px"></a>
                             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
                                 <span class="navbar-toggler-icon"></span>
                             </button>
