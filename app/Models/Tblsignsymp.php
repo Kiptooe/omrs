@@ -4,7 +4,7 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class Tblsignsymp extends Model{
+class TblSignSymp extends Model{
 
 protected $table = 'tbl_signsymp';
 protected $primaryKey = 'signsymp_id';

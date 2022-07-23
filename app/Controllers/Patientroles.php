@@ -9,10 +9,10 @@ class Patientroles extends BaseController
     public function getSummary($page,$id)
     {
 
-        $tv = new tbl_vitals();
+        $tv = new TblVitals();
         $summary['vitals'] = $tv->fetchVitals($id);
 
-        $ts = new Tblsignsymp();
+        $ts = new TblSignSymp();
 
         $summary['sign_symp'] = $ts->fetchSignSymp($id);
 
