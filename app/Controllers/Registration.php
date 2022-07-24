@@ -27,9 +27,10 @@ class Registration extends Home
 {
 
     function __construct() {
-        require_once 'C:\Users\Meshack Owino\vendor\PHPMailer\PHPMailer\src\PHPMailer.php"';
-        require_once 'C:\Users\Meshack Owino\vendor\PHPMailer\PHPMailer\src\SMTP.php"';
-        require_once 'C:\Users\Meshack Owino\vendor\PHPMailer\PHPMailer\src\Exception.php"';
+        
+        require_once 'PHPMailer/PHPMailer.php"';
+        require_once 'PHPMailer/SMTP.php"';
+        require_once 'PHPMailer/Exception.php"';
 
     }
     
@@ -118,7 +119,13 @@ class Registration extends Home
 
             ];
 
-            // send_email_to_user($data['email']);
+            $email_data=[
+                'email'=>$data['email'],
+                'message'=>'Your Password is: '.$data['password_code'].' and Key is: '.$key['password_code']
+            ];
+
+            // $registration->send_email($email_data);
+
 
 
             // $registration->data_exist($data,$role);
@@ -149,9 +156,9 @@ class Registration extends Home
                 
                 $full_name=$data['firstname']." ".$data['lastname'];
 
-                $email_sent=$registration->send_email($data);
+                $email_sent=$registration->send_email($email_data);
 
-                $message="Registration of <b style='color:red;'> ".$role."</b> ".$full_name." <b class='text-primary'>is Successful.</b> Password is: <b style='color:purple'>".$password['password_code']."</b>";
+                $message="Registration of <b style='color:red;'> ".$role."</b> ".$full_name." <b class='text-primary'>is Successful.</b>";
 
 
                 if ($email_sent) {
@@ -165,9 +172,9 @@ class Registration extends Home
             }
             
 
-                $message="<b style='color:red;'>Failled</b>!!!: Registration <b style='color:red;'>NOT</b> Successful.";
+            $message="<b style='color:red;'>Failled</b>!!!: Registration <b style='color:red;'>NOT</b> Successful.";
 
-                $registration->message($message);
+            $registration->message($message);
             
         
     }
@@ -249,7 +256,6 @@ class Registration extends Home
 
 
     function send_email(array $data){
-
         
         try{
 

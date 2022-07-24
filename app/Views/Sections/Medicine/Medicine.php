@@ -1,9 +1,11 @@
-<div class="container bg-info">
+<?php
+if(isset($action)){
 
-<form id='form-register'  method="post">
+    if($action=='add'){
 
-<div class="d-block">
+       
 
+?>
 <div id=""class="row col col-lg-5 "  >
   <div class="col col-md-12 form-group">
     <label class="font-weight-bold" for="first_name">First Name :<span class="star ">*</span></label>
@@ -23,11 +25,7 @@
 </div>
 
 
-
-
-
-
-  <div id=""class="row col col-lg-5">
+<div id=""class="row col col-lg-5">
   <div class="col col-md-12 form-group">
     <label class="font-weight-bold" for="role_name">Role Name :<span class="star">*</span></label>
     <select class="form-control" name="role_name" id="role_name" onchange ="validate_select(this.value, 'role_error');">
@@ -120,45 +118,103 @@
     <center><button class="btn btn-primary" id="upload_btn" onclick="register()" style="margin-bottom: 2%;">Register</button></center>
   </div>
 
+<?php
+    }
+    else if ($action=='view') {
+        # code...
+
+?>
+
+<div class="col col-md-12 table-responsive">
+    <div class="table-responsive">
+      <table class="table table-bordered table-striped table-hover">
+          <thead class="bg-info">
+              <tr>
+                    <th style="width: 3%;">No.</th>
+                    <th style="width: 16%;">Medicine Name</th>
+                    <th style="width: 11%;">Quantity</th>
+                    <?php
+                        if(isset($expired)){
+                    ?>
+                    <th style="width: 7%;">Price</th>
+                    <th style="width: 7%;">Added By</th>
+                    <?php
+                        }
+                    ?>
+                    <th style="width: 15%;">Added Date</th>
+                    <?php
+                        if(isset($expired)){
+                    ?>
+                    <th style="width: 15%;">Updated Date</th>
+                    <?php
+                        }
+                    ?>
+                    <th style="width: 10%;">Expiry Date</th>
+                    <?php
+                        if(isset($expired)){
+                    ?>
+                    <th style="width: 5%;">Expired</th>
+                    <?php
+                        }
+                    ?>
+               </tr>
+            </thead>
+
+            <tbody id="customers_div">
+                  <?php
+                    if (isset($medicine_data) && count($medicine_data)>0) {
+                      // code...
+                      $number=0;
+
+                      for ($i=0; $i <count($medicine_data) ; $i++){
+                        $number +=1;
+
+                        ?>
+                        <tr>
+                          <td><?= $number;?></td>
+                          <td><?= $medicine_data[$i]['medicine_name']?></td>
+                          <td><?= $medicine_data[$i]['quantity']?></td>
+                          <?php
+                            if(isset($expired)){
+                          ?>
+                          <td><?= $medicine_data[$i]['price']?></td>
+                          <td><?= $medicine_data[$i]['added_by']?></td>
+                          <?php
+                              }
+                          ?>
+                          <td><?= $medicine_data[$i]['added_at']?></td>
+                          <?php
+                            if(isset($expired)){
+                          ?>
+                            <td><?= $medicine_data[$i]['updated_at']?></td>
+
+                          <?php
+                              }
+                          ?>
+                          <td><?= $medicine_data[$i]['expiry_date']?></td>
+                          <?php
+                            if(isset($expired)){
+                          ?>
+                          <td><?= $medicine_data[$i]['Expired']?></td>
+                          <?php
+                              }
+                          ?>
+                          
+                          
+                        </tr>
+
+                        <?php
+                      }
+                    }
+                  ?>
+            </tbody>
+      </table>
+    </div>
+</div>
+
 
 <?php
-          if (isset($validation)) {?>
+    }
 
-  <center>
-
-    <div style="width:80%;" class="text-danger">
-
-  <div id="1"class="row col col-lg-12 bg-info">
-  
-  <center><h4 class=" font-weight-bold bg-light text-danger m-3">Error Dialog Box</h4></center>
-
-            
-            <div class="form-group">
-              <div class="alert alert-danger" role="alert">
-                <?php echo $validation->listErrors(); ?>
-              </div>
-            </div>
-        
-        
-</div>
-  
-</div>
-
-</center>
-<?php }
-        ?>
-
- 
-</div>
-</div>
-</form>
-<!-- </form> -->
-
-<!-- result message -->
-<div class="col-md-12 h5 text-success font-weight-bold text-center" style="font-family: sans-serif;">
-  
-  <p id="registration_acknowledgement"></p>
-  <p id="mb_refresh" style="display: none;"><a href="" >Refresh Page</a></p>
-</div>
-
-</div>
+}
+?>

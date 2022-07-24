@@ -16,17 +16,17 @@ function validatelogin() {
 
         
        $.ajax({
-            url : "/sections/login/validate_data",
+            url : "/login/validate_data",
             type : 'POST',
             data :  $('#form-login').serialize(),
             success : function(msg) {
 
               // alert(msg);
 
-              if (msg=="true") {
+              if (msg==1) {
                 
-
-                    $("#form-login").submit();
+                window.location.href='/login/login';
+                // $("#form-login").submit();
 
 
               }
@@ -339,8 +339,8 @@ function validate_select(select,error){
 
 
 
+function isAdmin(){
 
-function is_admin(){
 
 	var username=$('#login-username').val();
 	var password=$('#login-pswd').val();
@@ -351,14 +351,14 @@ function is_admin(){
             url : "/home/is_admin",
             type : 'POST',
             data :  $('#form-login').serialize(),
-            success : function(msg) {
+            success:function(msg) {
 
 
               	if (msg==0) {
                 
 
-                       $('#reset-pass-div').css('display','none');
-                       $('#register-div').css('display','block');
+                  $('#reset-pass-div').css('display','none');
+                  $('#register-div').css('display','block');
 
 
 
@@ -378,6 +378,7 @@ function is_admin(){
               }
 
             }
+            
 
             
         });
@@ -400,39 +401,7 @@ function password_reset(value){
   $('#password_update').html('Loading...')
 
  
-  // if (value==1) {
-
-    // email=$('#newpass_email').val();
-
-    // $('#newpass_email').attr('readonly',true);
-    // $('#btn-code').css('display','none');
-    // $('.pass-code').css('display','block');
-    // $('#btn-conf-code').css('display','block');
-    // $('#password_update').html('')
-
-
-  // }
-
-  // if (value==2) {
-
-
-    // $('#newpass_code').attr('readonly',true);
-    // $('#btn-conf-code').css('display','none');
-    // $('.pass-fld').css('display','block');
-    // $('#btn-new-pass').css('display','block');
-    // $('#password_update').html('')
-
-
-  // }
-
-  // if (value==3) {
-
-    // $('#newpass').attr('readonly',true);
-
-    
-
-     
-  // }
+  
 
   $.ajax({
 

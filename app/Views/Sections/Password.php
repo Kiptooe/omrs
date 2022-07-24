@@ -1,7 +1,7 @@
 <div class="container">
-	<div class="CenterDIV">
+	<div class="CenterDIV d-block">
         <dialog class="" style="max-width: 30%;">
-            <form class="cashier-edit1 col-md-12" onsubmit="thefuncion(){ return false;}" id="cashier-edit1" action="#" method="post">
+            <form class="cashier-edit1 col-md-12" id="cashier-edit1" action="#" method="post">
 
              
             <div class="pass-email">
@@ -37,9 +37,9 @@
                 </div> <br>
                     
                
-                <a class="btn btn-danger btn-lg text-light font-weight-bold form-control" id="btn-code" onclick="password_reset(1)">Send Code</a>
-                <a style="display:none;" class="btn btn-danger btn-lg text-light font-weight-bold form-control" id="btn-conf-code" onclick="password_reset(2)">Confirm Code</a>
-                <a style="display:none;" class="btn btn-danger btn-lg text-light font-weight-bold form-control" id="btn-new-pass" onclick="password_reset(3)">Save</a><br>
+                <a class="btn btn-danger btn-sm text-light font-weight-bold form-control" id="btn-code" onclick="password_reset(1)">Send Code</a>
+                <a style="display:none;" class="btn btn-danger btn-sm text-light font-weight-bold form-control" id="btn-conf-code" onclick="password_reset(2)">Confirm Code</a>
+                <a style="display:none;" class="btn btn-danger btn-sm text-light font-weight-bold form-control" id="btn-new-pass" onclick="password_reset(3)">Save</a><br>
                 <label style="display: none ;" id="psw-msg">Password updated successfully. Go back to <a href="/home/index">Login</a></label>
 
               </form>
