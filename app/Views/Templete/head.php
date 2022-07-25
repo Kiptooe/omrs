@@ -5,7 +5,7 @@
 	<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0, Bootstrap">
 	<link rel="shortcut icon" type="image/jpg" href="/favicon.ico"/>
 
-	<title>Hospital Management System</title>
+	<title>Outpatient Medical Records System</title>
 
     <link rel="shortcut icon" href="images/hospital.svg" type="image/x-icon">
 	<!-- <link rel="shortcut icon" href="/titlelogo.ico" type="image/x-icon"> -->
