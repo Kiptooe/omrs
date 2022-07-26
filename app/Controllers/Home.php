@@ -3,15 +3,16 @@
 namespace App\Controllers;
 use CodeIgniter\I18n\Time;
 use App\Controllers\registration;
+use App\Controllers\FetchData;
 use App\Controllers\login;
-use App\Models\tbl_admin;
+use App\Models\tblAdmin;
 
 class Home extends BaseController
 {
    
     //  LANDING PAGE FUNCTION
 
-    public function index($message=null)
+    public function getHome_Page($message=null)
     {
         // $db_branch=new db_branch();
         //  $home=new home();
@@ -53,7 +54,7 @@ class Home extends BaseController
 
             // $email->send_email('btgavygarvey@gmail.com');
 
-        $all['title']='Medical Management System';
+        $all['title']='Outpatient Medical Record System';
 
 
 
@@ -65,6 +66,11 @@ class Home extends BaseController
     
 
     function getPages(){
+
+        $fetchData=new FetchData();
+
+        $all['dashboard_data']=$fetchData->getAdminHomePage();
+
 
         if (isset($_REQUEST['reg'])) {
             // code...
@@ -108,18 +114,6 @@ class Home extends BaseController
             }
         }
 
-        // if (isset($_REQUEST['msr'])) {
-        //     // code...
-
-        //     $all['title']='Medicine Sales Report';
-
-        //     if ($_REQUEST['msr']==$_SESSION['code']) {
-        //         // code...
-        //         echo view('templete/head',$all);
-        //         echo view('sections/reports/medicine-report');
-        //         echo view('templete/foot');exit();
-        //     }
-        // }
 
         if (isset($_REQUEST['gmr'])) {
             // code...
@@ -155,7 +149,6 @@ class Home extends BaseController
 
             $all['title']='Patients';
             $all['header']='Patients';
-            // $all['staff']='patients';
 
             if ($_REQUEST['tpa']==$_SESSION['code']) {
                 // code...
@@ -173,6 +166,8 @@ class Home extends BaseController
 
             if ($_REQUEST['td']==$_SESSION['code']) {
                 // code...
+            $all['table']='doctors';
+
 
             }
         }
@@ -185,6 +180,8 @@ class Home extends BaseController
 
             if ($_REQUEST['tn']==$_SESSION['code']) {
                 // code...
+            $all['table']='nurse';
+                
 
             }
         }
@@ -197,6 +194,7 @@ class Home extends BaseController
 
             if ($_REQUEST['tlt']==$_SESSION['code']) {
                 // code...
+                $all['table']='lab_tech';
 
             }
         }
@@ -209,23 +207,24 @@ class Home extends BaseController
 
             if ($_REQUEST['tr']==$_SESSION['code']) {
                 // code...
+                $all['table']='receptionist';
 
 
             }
         }
 
-        if (isset($_REQUEST['tp'])) {
-            // code...
+        // if (isset($_REQUEST['tp'])) {
+        //     // code...
 
-            $all['title']='Pharmacists';
-            $all['header']='Pharmacists';
+        //     $all['title']='Pharmacists';
+        //     $all['header']='Pharmacists';
 
-            if ($_REQUEST['tp']==$_SESSION['code']) {
-                // code...
+        //     if ($_REQUEST['tp']==$_SESSION['code']) {
+        //         // code...
 
 
-            }
-        }
+        //     }
+        // }
 
         if (isset($_REQUEST['tam'])) {
             // code...
@@ -347,15 +346,16 @@ class Home extends BaseController
     // }
 
 
-    function getIs_admin(){
 
-        $tbl_admin=new tbl_admin();
+    function postIsAdmin(){
+
+        $tbl_admin=new tblAdmin();
         $home=new home();
 
         $username=$this->request->getPost('username');
         $password=$this->request->getPost('password');
 
-        $salt_password=$home->salt_password($password);
+        $salt_password=$home->getSalt_password($password);
 
         $admin_data=['username'=>$username,'password'=>$salt_password];
 
@@ -383,7 +383,7 @@ class Home extends BaseController
 
             $password_code=substr(str_shuffle($alphaNumeric),0,8);
 
-            $salt_password=$home->salt_password($password_code);
+            $salt_password=$home->getSalt_password($password_code);
 
             $password_data=['password_code'=>$password_code,'salt_password'=>$salt_password];
             return $password_data;
@@ -409,7 +409,7 @@ class Home extends BaseController
         $home=new home();
         $registration=new registration();
         $login=new login();
-        $tbl_admin=new tbl_admin();
+        $tbl_admin=new tblAdmin();
 
 
         $value=$this->request->getPost('value');
@@ -419,7 +419,7 @@ class Home extends BaseController
 
             $email=$this->request->getPost('email');
 
-            $verification_code=$home->generate_password();
+            $verification_code=$home->getGenerate_password();
 
             $_SESSION['verification_code']=$verification_code['password_code'];
 
@@ -429,7 +429,7 @@ class Home extends BaseController
                 'message'=>'Use this code : '.$verification_code['password_code'].' to verify your email.'
             ];
             
-            $code_sent=$registration->send_email($data);
+            $code_sent=$registration->postSend_email($data);
 
             if ($code_sent) {
                 # code...
@@ -462,11 +462,11 @@ class Home extends BaseController
 
             $password=$this->request->getPost('password');
 
-            $salt_password=$home->salt_password($password);
+            $salt_password=$home->getSalt_password($password);
 
             $login->get_ip_address();
 
-            $date=$home->date('now');
+            $date=$home->getDate('now');
 
 
             $data=[

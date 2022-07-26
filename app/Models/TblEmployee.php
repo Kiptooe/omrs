@@ -4,7 +4,7 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class Tbl_Employee extends Model
+class TblEmployee extends Model
 {
 	protected $DBGroup              = 'default'; // default database group
   
@@ -13,7 +13,7 @@ class Tbl_Employee extends Model
   
 	protected $table='tbl_employee';
 	protected $primaryKey='employee_id';
-	protected $allowedFields=['password','is_deleted','firstname','lastname','email','gender','mobile_number','national_id','updated_at'];
+	protected $allowedFields=['password','is_deleted','firstname','lastname','email','gender','mobile_number','national_id','updated_at','role_id'];
 	protected $beforeInsert=['beforeInsert'];
     protected $beforeUpdate=['beforeUpdate'];
 

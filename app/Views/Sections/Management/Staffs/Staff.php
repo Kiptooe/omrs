@@ -9,7 +9,14 @@
                     <th style="width: 12%;">Mobile Number</th>
                     <th style="width: 15%;">Email</th>
                     <th style="width: 7%;">Gender</th>
-                    <th style="width: 7%;">Role</th>
+                    <?php
+                        if(isset($staff)){
+                    ?>
+                      <th style="width: 7%;">Role</th>
+
+                    <?php
+                        }
+                    ?>
                     <th style="width: 12%;">Registered Date</th>
                     <th style="width: 15%;">Updated Date</th>
                     <?php
@@ -24,7 +31,18 @@
 
             <tbody id="customers_div">
                   <?php
-                    if (isset($staff_data) && count($staff_data)>0) {
+
+                  if(isset($dashboard_data['all_employees_data'])){
+                    $staff_data=$dashboard_data['all_employees_data'];
+
+                  }else{
+                    $staff_data=$dashboard_data[$table.'_data'];
+
+                  }
+
+
+                  // print_r($staff_data);
+                    if (isset($staff_data) && !empty($staff_data)) {
                       // code...
                       $number=0;
 
@@ -42,7 +60,7 @@
                           <?php
                             if(isset($staff)){
                           ?>
-                          <td><?= $role_data[$i]['role_name']?></td>
+                          <td><?= $dashboard_data['all_roles'][$i]['role_name']?></td>
                           <?php
                             }
                           ?>
@@ -54,13 +72,13 @@
                           ?>
 
                             <td> 
-                                <button onclick="view_all(<?= $staff_data[$i]['staff_id']?>,2)" class="btn btn-warning btn-sm">
+                                <button onclick="view_all(<?= $staff_data[$i]['employee_id']?>,2)" class="btn btn-warning btn-sm">
                                     <i class="fa fa-pencil"></i>
                                 </button>
                                 
                             </td>
                             <td>
-                                <button onclick="delete_data(<?= $staff_data[$i]['staff_id']?>,1)" class="btn btn-danger btn-sm">
+                                <button onclick="delete_data(<?= $staff_data[$i]['employee_id']?>,1)" class="btn btn-danger btn-sm">
                                     <i class="fa fa-trash"></i>
                                 </button>
                             </td>

@@ -341,14 +341,13 @@ function validate_select(select,error){
 
 function isAdmin(){
 
-
 	var username=$('#login-username').val();
 	var password=$('#login-pswd').val();
 
 	if (username.trim() !='' && password.trim() !='') {
 
 		 $.ajax({
-            url : "/home/is_admin",
+            url : "/home/IsAdmin",
             type : 'POST',
             data :  $('#form-login').serialize(),
             success:function(msg) {

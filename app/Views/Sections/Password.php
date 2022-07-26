@@ -46,7 +46,7 @@
               <div id="password_update" class=" col-md-12 h5 m-2 text-success font-weight-bold text-center" style="font-family: sans-serif;">
 
             </div>
-              <a class="btn-cancel" style="text-decoration: none;" href="/home/index">Cancel</a>
+              <a class="btn-cancel" style="text-decoration: none;" href="/home/home_page">Cancel</a>
 
           </dialog>
 

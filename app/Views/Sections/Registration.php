@@ -1,6 +1,6 @@
-<div class="container bg-info">
+<div class="container ">
 
-<form id='form-register'  method="post">
+<form id='form-register'  method="post" class="bg-info">
 
 <div class="d-block">
 

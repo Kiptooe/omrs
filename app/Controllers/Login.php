@@ -4,11 +4,12 @@ namespace App\Controllers;
 // use App\Controllers\BaseController;
 use App\Controllers\Registration;
 use App\Controllers\home;
+use App\Controllers\fetchData;
 // use App\Controllers\Sections\home_;
-use App\Models\Tbl_Admin;
-use App\Models\Tbl_Role;
-use App\Models\tbl_employee;
-use App\Models\tbl_patient;
+use App\Models\TblAdmin;
+use App\Models\TblRole;
+use App\Models\tblEmployee;
+use App\Models\tblPatient;
 // use App\Models\db_cashier;
 // use App\Models\db_branch;
 // use App\Models\db_attendance;
@@ -90,19 +91,19 @@ class Login extends Home
 
    
 
-    public function validate_data(){
+    public function postValidate_data(){
 
-        $tbl_role=new tbl_role();
+        $tbl_role=new tblRole();
         $login=new login();
-        $tbl_admin=new tbl_admin();
-        $tbl_employee=new tbl_employee();
-        $tbl_patient=new tbl_patient();
+        $tbl_admin=new tblAdmin();
+        $tbl_employee=new tblEmployee();
+        $tbl_patient=new tblPatient();
         $registration=new Registration();
         $home=new home();
 
         $login->get_ip_address();
 
-        $time=$home->date('now');
+        $time=$home->getDate('now');
 
         $time=$time->toTimeString();
             
@@ -110,8 +111,8 @@ class Login extends Home
         $key=$this->request->getPost('key');
 
         
-            $salt_password=$home->salt_password($password);
-            $salt_key=$home->salt_password($key);
+            $salt_password=$home->getSalt_password($password);
+            $salt_key=$home->getSalt_password($key);
 
             $login_data=[
                 'password'=>$salt_password,
@@ -153,7 +154,7 @@ class Login extends Home
                 }
                 else{
 
-                    print_r($is_employee);exit();
+                    // print_r($is_employee);exit();
 
                     $role_name=$tbl_role->where('role_id',$is_employee['role_id'])->first();
 
@@ -179,15 +180,16 @@ class Login extends Home
             
     }
 
-    function login(){
+    function getlogin(){
        
 
-        $tbl_role=new tbl_role();
+        $tbl_role=new tblRole();
         $login=new login();
-        $tbl_admin=new tbl_admin();
-        $tbl_employee=new tbl_employee();
-        $tbl_patient=new tbl_patient();
+        $tbl_admin=new tblAdmin();
+        $tbl_employee=new tblEmployee();
+        $tbl_patient=new tblPatient();
         $registration=new Registration();
+        $fetchData=new fetchData();
         $home=new home();
 
         
@@ -203,18 +205,18 @@ class Login extends Home
             $_SESSION['folder']=$_SESSION['role'];
 
 
-        // $_SESSION['logedIn_data']=$cashier_data;
+        // $_SESSION['logedIn_data']=$_SESSION['login_data'];
 
-        // $_SESSION['cashier_id']=$cashier_data['cashier_data']['cashier_id'];
+        // $_SESSION['cashier_id']=$_SESSION['login_data']['cashier_id'];
 
 
-        // $all['dashboard_data']=$home_->dashbord_data();
+        $all['dashboard_data']=$fetchData->getAdminHomePage();
 
         // $home_=new home_();
 
         // $home_->session_time();
 
-        $all['title']="Administrator Dashboard";
+        $all['title']=$_SESSION['role'];
 
         
         echo view('templete/head',$all);
