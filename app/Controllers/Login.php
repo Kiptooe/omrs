@@ -127,7 +127,7 @@ class Login extends Home
             $_SESSION['role']='';
 
 
-            if (! $is_admin && !is_array($is_admin)) {
+            if (! $is_admin || !is_array($is_admin)) {
                 // code...
 
                 $is_employee=$tbl_employee->login($login_data);

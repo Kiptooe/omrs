@@ -6,6 +6,8 @@ use App\Controllers\registration;
 use App\Controllers\FetchData;
 use App\Controllers\login;
 use App\Models\tblAdmin;
+use App\Models\tblPatient;
+use App\Models\tblEmployee;
 
 class Home extends BaseController
 {
@@ -50,7 +52,7 @@ class Home extends BaseController
 
 
         // $branch['branch_data']=$db_branch->findAll();
-        // $branch['session_expires']=$message;
+        $all['session_expires']=$message;
 
             // $email->send_email('btgavygarvey@gmail.com');
 
@@ -65,7 +67,7 @@ class Home extends BaseController
 
     
 
-    function getPages(){
+    function getPages($value=null){
 
         $fetchData=new FetchData();
 
@@ -78,7 +80,7 @@ class Home extends BaseController
             $all['title']='Registration';
 
 
-            if ($_REQUEST['reg']==$_SESSION['code']) {
+            if ($_REQUEST['reg']==$value) {
                 // code...
                 echo view('templete/head',$all);
                 echo view('sections/registration');
@@ -90,9 +92,10 @@ class Home extends BaseController
             // code...
 
             $all['title']='Reset Password';
-
-            if ($_REQUEST['pass']==$_SESSION['code']) {
+            if ($_REQUEST['pass']==$value) {
                 // code...
+
+
                 echo view('templete/head',$all);
                 echo view('sections/password');
                 echo view('templete/foot');exit();
@@ -306,44 +309,44 @@ class Home extends BaseController
 
 
 
-    // // LOGOUT FUNCTION
+     // LOGOUT FUNCTION
 
 
-    // public function logout(){
+    public function getLogout(){
 
-    //     $home=new home();
-    //     $db_login=new db_login();
+        $home=new home();
+        // $tbllogin=new tbllogin();
 
 
-    //     $mydate=$home->date('now');
+        // $mydate=$home->getDate('now');
 
-    //     if (isset($_SESSION['logedIn_data'])) {
-    //         // code...
-    //         $login_data=$db_login->where('cashier_id',$_SESSION['logedIn_data']['cashier_data']['cashier_id'])->first();
-    //     }
-    //     elseif (isset($_COOKIE['logedIn_data'])) {
-    //         // code...
-    //         $data=json_decode($_COOKIE['logedIn_data'],true);
+        // if (isset($_SESSION['logedIn_data'])) {
+        //     // code...
+        //     $login_data=$db_login->where('cashier_id',$_SESSION['logedIn_data']['cashier_data']['cashier_id'])->first();
+        // }
+        // elseif (isset($_COOKIE['logedIn_data'])) {
+        //     // code...
+        //     $data=json_decode($_COOKIE['logedIn_data'],true);
 
-    //         $login_data=$db_login->where('cashier_id',$data['cashier_data']['cashier_id'])->first();
-    //     }
+        //     $login_data=$db_login->where('cashier_id',$data['cashier_data']['cashier_id'])->first();
+        // }
 
         
 
-    //         $logOut_data=[
-    //             'is_deleted'=>1,
-    //             'logout_time'=>$mydate
-    //         ];
+        //     $logOut_data=[
+        //         'is_deleted'=>1,
+        //         'logout_time'=>$mydate
+        //     ];
 
-    //     $db_login->update($login_data['login_id'],$logOut_data);
+        // $db_login->update($login_data['login_id'],$logOut_data);
 
-    //     session_unset();
-    //     session_destroy();
+        // session_unset();
+        // session_destroy();
 
-    //     $message="Logged Out.";
+        $message="Logged Out.";
 
-    //     $home->index($message);
-    // }
+        $home->getHome_Page($message);
+    }
 
 
 
@@ -403,13 +406,15 @@ class Home extends BaseController
     
     }
 
-    function putUpdate_password(){
+    function postUpdate_password(){
 
 
         $home=new home();
         $registration=new registration();
         $login=new login();
         $tbl_admin=new tblAdmin();
+        $tblPatient=new tblPatient();
+        $tblEmployee=new tblEmployee();
 
 
         $value=$this->request->getPost('value');
@@ -475,7 +480,7 @@ class Home extends BaseController
                 'updated_at'=>$date
             ];
 
-            $is_admin=$tbl_admin->where('admin_id',1)->first();
+            $is_admin=$tbl_admin->where('email',$data['email'])->first();
             
             if ($is_admin) {
                 # code...
@@ -491,7 +496,47 @@ class Home extends BaseController
                 }
             }
             else{
-                echo "User not found";exit();
+            $is_employee=$tblEmployee->where('email',$data['email'])->first();
+
+
+                if ($is_employee) {
+                # code...
+                
+                $updated=$tblEmployee->update($is_employee['employee_id'],$data);
+
+                if($updated){
+                    
+                    return $value;exit();
+                }
+                else{
+                    echo "<b class='text-danger'>Error!!!</b> Failled to update password";
+                }
+
+                }
+                else{
+
+                    $is_patient=$tblEmployee->where('email',$data['email'])->first();
+
+
+                    if ($is_patient) {
+                    # code...
+                    
+                    $updated=$tblPatient->update($is_patient['patient_id'],$data);
+
+                    if($updated){
+                        
+                        return $value;exit();
+                    }
+                    else{
+                        echo "<b class='text-danger'>Error!!!</b> Failled to update password";
+                    }
+
+                    }
+                    else{
+                        echo "<b class='text-danger'>Error!!!</b> User not found";
+                    }
+
+                }
 
             }
 

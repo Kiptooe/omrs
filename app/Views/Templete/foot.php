@@ -2,6 +2,7 @@
 
   	<?= script_tag("My_JS/additions.js")?>
   	<?= script_tag("/My_JS/validation.js")?>
+  	<?= script_tag("/My_JS/options.js")?>
 
 </body>
 </html>
