@@ -12,8 +12,11 @@ class Patientroles extends BaseController
         echo view($page);
         echo view('/Templete/foot.php');
     }
-    public function getSummary($page,$id)
+    public function getSummary($page, $user)
     {
+
+        
+
 
         $tv = new TblVitals();
         $summary['vitals'] = $tv->fetchVitals($id);

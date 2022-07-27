@@ -12,6 +12,14 @@ class Home extends BaseController
    
     //  LANDING PAGE FUNCTION
 
+    public function index()
+    {
+        echo view('Templete/head.php');        
+        echo view('PatientHome.php');
+        echo view('Templete/foot.php');
+    
+    }
+
     public function getHome_Page($message=null)
     {
         // $db_branch=new db_branch();

@@ -67,7 +67,7 @@ class FetchData extends BaseController
         
 
         // ALL LAB TECHNICIANS
-        $all['role_data']=$tblRole->where('role_name','Lab_Technician')->first();
+        $all['role_data']=$tblRole->where('role_name','Lab Technician')->first();
 
         if ($all['role_data']) {
             // code...

@@ -38,7 +38,7 @@
       <option value="Lab Technician">Lab Technician</option>
       <option value="Patient">Patient</option>
       <option value="Receptionist">Receptionist</option>
-      <option value="Pharmacist">Pharmacist</option>
+      <!-- <option value="Pharmacist">Pharmacist</option> -->
       
     </select>
     <code class="text-danger small font-weight-bold float-right" id="role_error" style="display: none;"></code>
@@ -95,7 +95,7 @@
   </div>
 </div>
 
-<div id=""class="row col col-lg-5" style="display:none">
+<div id=""class="row col col-lg-5" >
   <div class="col col-md-12 form-group">
     <label class="font-weight-bold" for="gender">Choose Gender :<span class="star">*</span></label>
     <select class="form-control" id="gender" name="gender">

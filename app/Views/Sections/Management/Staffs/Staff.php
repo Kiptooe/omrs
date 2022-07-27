@@ -4,9 +4,9 @@
           <thead class="bg-info">
               <tr>
                     <th style="width: 3%;">No.</th>
-                    <th style="width: 16%;">Staff Name</th>
+                    <th style="width: 15%;">Staff Name</th>
                     <th style="width: 11%;">National ID</th>
-                    <th style="width: 12%;">Mobile Number</th>
+                    <th style="width: 13%;">Mobile Number</th>
                     <th style="width: 15%;">Email</th>
                     <th style="width: 7%;">Gender</th>
                     <?php
@@ -18,7 +18,7 @@
                         }
                     ?>
                     <th style="width: 12%;">Registered Date</th>
-                    <th style="width: 15%;">Updated Date</th>
+                    <th style="width: 12%;">Updated Date</th>
                     <?php
                         if(!isset($staff)){
                     ?>
@@ -32,7 +32,7 @@
             <tbody id="customers_div">
                   <?php
 
-                  if(isset($dashboard_data['all_employees_data'])){
+                  if(isset($staff)){
                     $staff_data=$dashboard_data['all_employees_data'];
 
                   }else{
