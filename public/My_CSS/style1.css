@@ -1,0 +1,68 @@
+.container {
+  /*background: linear-gradient(rgba(0,0,0,0.6),rgba(0, 0, 0, 0.6)),url('/images/bck.jpg');*/
+  max-width: 100%;
+  margin: 0 auto;
+  background-color: #ffffff;
+  border-radius: 5px;
+  min-height: auto;
+  padding: 0 1em;
+  
+}
+
+
+.card {
+  width: 100%;
+  height: 100%;
+  top: 0;
+  border-radius: 0;
+  background-color: #111111;
+  overflow-y: auto;
+}
+
+@media(min-width: 40em){
+  .div{
+    display: inline-flex;
+    gap: 2em;
+    padding: .4em 2em;
+  }
+  .div1{
+    display: inline-flex;
+    gap: 1em;
+    padding: .3em 1em;
+  }
+  
+}
+.div a{
+    margin-bottom: 10px;
+    
+  }
+
+  .div input{
+    margin-bottom: 10px;
+    
+  }
+
+   .msg{
+    max-width: 100%;
+    max-height: auto;
+    
+  }
+  
+#login-form{
+  background: linear-gradient(rgba(0,0,0,0.6),rgba(0, 0, 0, 0.6)),url('/images/logo4.jpg');
+  width: 100%;
+  color: #fff;
+  font-size: 15px;
+  padding: 20px 20px 0;
+  
+  
+}
+
+.dashboard-stats {
+  background-color: #f1f3f6;
+  margin: 2%;
+  padding: 15px;
+  border-radius: 5px;
+  border: 1px solid #02b6ff;
+  cursor: pointer;
+}

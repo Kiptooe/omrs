@@ -2,8 +2,10 @@
 
 namespace App\Controllers;
 // use App\Controllers\BaseController;
-use App\Models\tbl_admin;
-use App\Models\tbl_role;
+use App\Models\tblAdmin;
+use App\Models\tblPatient;
+use App\Models\tblEmployee;
+use App\Models\tblRole;
 // use App\Models\adult_employees;
 // use App\Models\root;
 // use App\Models\adult_registration;
@@ -27,21 +29,24 @@ class Registration extends Home
 {
 
     function __construct() {
-        require_once 'C:\Users\Meshack Owino\vendor\PHPMailer\PHPMailer\src\PHPMailer.php"';
-        require_once 'C:\Users\Meshack Owino\vendor\PHPMailer\PHPMailer\src\SMTP.php"';
-        require_once 'C:\Users\Meshack Owino\vendor\PHPMailer\PHPMailer\src\Exception.php"';
+        
+        require_once 'PHPMailer/PHPMailer.php"';
+        require_once 'PHPMailer/SMTP.php"';
+        require_once 'PHPMailer/Exception.php"';
 
     }
     
 
     //  employee REGISTRATION
 
-    public function registration(){
+    public function postRegistration(){
 
 
-        $tbl_role=new tbl_role();
+        $tblRole=new tblRole();
         $registration=new registration();
-        $tbl_admin=new tbl_admin();
+        $tblAdmin=new tblAdmin();
+        $tblPatient=new tblPatient();
+        $tblEmployee=new tblEmployee();
         $home=new home();
 
         
@@ -57,7 +62,7 @@ class Registration extends Home
 
 
 
-        $password=$home->generate_password();
+        $password=$home->getGenerate_password();
 
         $role_id='';
 
@@ -65,7 +70,7 @@ class Registration extends Home
         if ($role) {
 
 
-            $role_exist=$tbl_role->where('role_name',$role)->first();
+            $role_exist=$tblRole->where('role_name',$role)->first();
 
 
             if ($role_exist) {
@@ -77,10 +82,10 @@ class Registration extends Home
 
                 $role_name=['role_name'=>$role];
 
-                $tbl_role->save($role_name);
+                $tblRole->save($role_name);
 
 
-                $role_exist=$tbl_role->where('role_name',$role)->first();
+                $role_exist=$tblRole->where('role_name',$role)->first();
 
                 $role_id=$role_exist['role_id'];
 
@@ -98,7 +103,7 @@ class Registration extends Home
 
 
 
-            $key=$home->generate_password();
+            $key=$home->getGenerate_password();
 
          
 
@@ -118,24 +123,32 @@ class Registration extends Home
 
             ];
 
-            // send_email_to_user($data['email']);
+            $email_data=[
+                'email'=>$data['email'],
+                'message'=>'Your Password is: '.$data['password_code']
+            ];
 
 
-            // $registration->data_exist($data,$role);
+            $registration->getData_exist($data,$role);
 
             if ($role=="Administrator") {
                 // code...
 
-                $inserted=$tbl_admin->save($data);
+                $email_data=[
+                    'email'=>$data['email'],
+                    'message'=>'Your Password is: '.$data['password_code'].' and Key is: '.$key['password_code']
+                ];
+
+                $inserted=$tblAdmin->save($data);
 
 
             }
             else if($role=="Patient"){
-                // $inserted=$tbl_patient->save($data);
+                $inserted=$tblPatient->save($data);
 
             }
             else{
-                // $inserted=$tbl_employee->save($data);
+                $inserted=$tblEmployee->save($data);
 
             }
 
@@ -149,14 +162,14 @@ class Registration extends Home
                 
                 $full_name=$data['firstname']." ".$data['lastname'];
 
-                $email_sent=$registration->send_email($data);
+                $email_sent=$registration->postSend_email($email_data);
 
-                $message="Registration of <b style='color:red;'> ".$role."</b> ".$full_name." <b class='text-primary'>is Successful.</b> Password is: <b style='color:purple'>".$password['password_code']."</b>";
+                $message="Registration of <b style='color:red;'> ".$role."</b> ".$full_name." <b class='text-primary'>is Successful.</b>";
 
 
                 if ($email_sent) {
                     // code...
-                    $registration->message($message);
+                    $registration->postMessage($message);
 
                 }
                 
@@ -165,15 +178,15 @@ class Registration extends Home
             }
             
 
-                $message="<b style='color:red;'>Failled</b>!!!: Registration <b style='color:red;'>NOT</b> Successful.";
+            $message="<b style='color:red;'>Failled</b>!!!: Registration <b style='color:red;'>NOT</b> Successful.";
 
-                $registration->message($message);
+            $registration->postMessage($message);
             
         
     }
 
 
-    function message($message){
+    function postMessage($message){
 
         echo $message;exit();
         
@@ -187,69 +200,93 @@ class Registration extends Home
     
     
 
-    function data_exist(array $data, $role){
+    function getData_exist(array $data, $role){
 
         $registration=new registration();
-        $tbl_admin=new tbl_admin();
+        $tblAdmin=new tblAdmin();
+        $tblPatient=new tblPatient();
+        $tblEmployee=new tblEmployee();
 
-        $national_id_exist=$adult_employees->where('national_id',$national_id)->first();
+        $national_id=$data['national_id'];
+
+
+
+        if($role=="Administrator"){
+
+        $national_id_exist=$tblAdmin->where('national_id',$data['national_id'])->where('is_deleted',0)->first();
+        $email_exist=$tblAdmin->where('email',$data['email'])->where('is_deleted',0)->first();
+        $mobile_number_exist=$tblAdmin->where('mobile_number',$data['mobile_number'])
+                                        ->where('is_deleted',0)
+                                        ->first();
+
+
+
+
+            
+        }
+        elseif($role=="Patient"){
+
+
+            if ($data['birth_cert']) {
+                // code...
+                $national_id_exist=$tblPatient->where('birth_cert',$data['birth_cert'])->first();
+
+                $national_id=$data['birth_cert'];
+
+                $email_exist=false;
+                $mobile_number_exist=false;
+            }
+            else if ($data['national_id']) {
+                // code...
+                 $national_id_exist=$tblPatient->where('national_id',$data['national_id'])->first();
+                $email_exist=$tblPatient->where('email',$data['email'])->first();
+                $mobile_number_exist=$tblPatient->where('mobile_number',$data['mobile_number'])
+                                        ->first();
+
+            }
+
+        }
+        else{
+            // code...
+        $national_id_exist=$tblEmployee->where('national_id',$data['national_id'])->first();
+        $email_exist=$tblEmployee->where('email',$data['email'])->first();
+        $mobile_number_exist=$tblEmployee->where('mobile_number',$data['mobile_number'])
+                                        ->first();
+
+
+
+        }
 
         if ($national_id_exist) {
             // code...
             $message="<b style='color:red;'>Registration Failled</b>!!!: ID <b style='color:blue;'>".$national_id."</b> had already been <b style='color:red;'>Registered</b>.";
 
-            $registration->message($message);
+            $registration->postMessage($message);
         }
 
-        $email_exist=$adult_employees->where('email',$email)->first();
+        
 
         if ($email_exist) {
             // code...
-            $message="<b style='color:red;'>Registration Failled</b>!!!: Email <b style='color:blue;'>".$email."</b> had already been <b style='color:red;'>Registered</b>.";
+            $message="<b style='color:red;'>Registration Failled</b>!!!: Email <b style='color:blue;'>".$data['email']."</b> had already been <b style='color:red;'>Registered</b>.";
 
-            $registration->message($message);
+            $registration->postMessage($message);
 
         }
 
-        $mobile_number1_exist=$adult_employees->where('mobile_number1',$mobile_number1)
-                                        ->orWhere('mobile_number2',$mobile_number1)
-                                        ->first();
-
-        if ($mobile_number1_exist) {
+      
+        if ($mobile_number_exist) {
             // code...
-            $message="<b style='color:red;'>Registration Failled</b>!!!: Mobile Number <b style='color:blue;'>".$mobile_number1."</b> had already been <b style='color:red;'>Registered</b>.";
+            $message="<b style='color:red;'>Registration Failled</b>!!!: Mobile Number <b style='color:blue;'>".$data['mobile_number']."</b> had already been <b style='color:red;'>Registered</b>.";
 
-            $registration->message($message);
+            $registration->postMessage($message);
         }
 
-        if ($mobile_number2 !=null) {
-            // code...
-
-            if ($mobile_number2 == $mobile_number1) {
-                // code...
-                $message="<b style='color:red;'>Registration Failled</b>!!!: First contact <b style='color:blue;'>".$mobile_number1."</b> & Second contact <b style='color:blue;'>".$mobile_number2."</b> <b style='color:red;'>CANNOT</b> be the same.";
-
-                $registration->message($message);
-            }
-
-
-            $mobile_number2_exist=$adult_employees->where('mobile_number1',$mobile_number2)
-                                        ->orWhere('mobile_number2',$mobile_number2)
-                                        ->first();
-            if ($mobile_number2_exist) {
-                // code...
-                $message="<b style='color:red;'>Registration Failled</b>!!!: Mobile Number <b style='color:blue;'>".$mobile_number2."</b> had already been <b style='color:red;'>Registered</b>.";
-
-                $registration->message($message);
-            }
-
-        }
-
+        
     }
 
 
-    function send_email(array $data){
-
+    function postSend_email(array $data){
         
         try{
 

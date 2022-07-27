@@ -79,7 +79,7 @@ class TblAdmin extends Model
         }
 
          $admin=$this->asArray()
-                    ->where('national_id',$data['national_id'])
+                    ->where('national_id',$data['username'])
                     ->first();
 
          if(!$admin){
