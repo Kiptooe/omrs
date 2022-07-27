@@ -194,7 +194,7 @@ class Login extends Home
 
         
 
-        $all['cashier_data']=$_SESSION['login_data'];
+        // $all['cashier_data']=$_SESSION['login_data'];
         $all['role_name']=$_SESSION['role'];
 
         setcookie("logedIn_data",json_encode($all),time()+1*24*60*60,"/");
