@@ -6,11 +6,12 @@ if(isset($action)){
        
 
 ?>
+<form id="add-medicine">
 <div id=""class="row col col-lg-5 "  >
   <div class="col col-md-12 form-group">
-    <label class="font-weight-bold" for="first_name">First Name :<span class="star ">*</span></label>
-    <input type="text" class="form-control" placeholder="First name as per ID" name="first_name" id="first_name" onblur ="validate_Name(this.value, 'first_name_error');">
-    <code class="text-danger small font-weight-bold float-right" id="first_name_error" style="display: none;"></code>
+    <label class="font-weight-bold" for="medicine_name">Medicine Name :<span class="star ">*</span></label>
+    <input type="text" class="form-control" placeholder="Medicine Name" name="medicine_name" id="medicine_name" onblur ="validate_Name(this.value, 'medicine_name_error');">
+    <code class="text-danger small font-weight-bold float-right" id="medicine_name_error" style="display: none;"></code>
   </div>
 </div>
 
@@ -18,93 +19,46 @@ if(isset($action)){
 
 <div id=""class="row col col-lg-5">
   <div class="col col-md-12 form-group">
-    <label class="font-weight-bold" for="last_name">Last Name :<span class="star">*</span></label>
-    <input type="text" class="form-control" placeholder="Surname as per ID" name="last_name" id="last_name" onblur="validate_Name(this.value, 'last_name_error');">
-    <code class="text-danger small font-weight-bold float-right" id="last_name_error" style="display: none;"></code>
+    <label class="font-weight-bold" for="medicine_price">Medicine Price :<span class="star">*</span></label>
+    <input type="text" class="form-control" placeholder="Medicine Price" name="medicine_price" id="medicine_price" onblur="validate_integers(this.value, 'medicine_price_error');">
+    <code class="text-danger small font-weight-bold float-right" id="medicine_price_error" style="display: none;"></code>
   </div>
 </div>
 
 
-<div id=""class="row col col-lg-5">
-  <div class="col col-md-12 form-group">
-    <label class="font-weight-bold" for="role_name">Role Name :<span class="star">*</span></label>
-    <select class="form-control" name="role_name" id="role_name" onchange ="validate_select(this.value, 'role_error');">
-      <option value="">Choose Role</option>
-      <option value="Administrator">Admin</option>
-      <option value="Doctor">Doctor</option>
-      <option value="Nurse">Nurse</option>
-      <option value="Lab Technician">Lab Technician</option>
-      <option value="Patient">Patient</option>
-      <option value="Receptionist">Receptionist</option>
-      <option value="Pharmacist">Pharmacist</option>
-      
-    </select>
-    <code class="text-danger small font-weight-bold float-right" id="role_error" style="display: none;"></code>
-  </div>
-</div>
-
-
-
-<div id="identification_type"class="row col col-lg-5" style="display:none">
-  <div class="col col-md-12 form-group">
-    <label class="font-weight-bold" for="identification">Choose Identification :<span class="star">*</span></label>
-    <select class="form-control" id="identification" name="identification" onchange="identification(this.value,'identification_error');">
-      <option value="national_id">National ID</option>
-      <option value="birth_certificate">Birth Certificate</option>
-    </select>
-    <code class="text-danger small font-weight-bold float-right" id="identification_error" style="display: none;"></code>
-  </div>
-</div>
-
-<div id="national_id" class="row col col-lg-5">
+<div  class="row col col-lg-5">
   <div  class="col col-md-12 form-group">
-    <label class="font-weight-bold" for="national_id">Enter National ID No. :<span class="star">*</span></label>
-    <input type="text" class="form-control" placeholder="National ID" name="national_id" id="national_id" onblur="validate_identification(this.value, 'national_id_error');" required>
-    <code class="text-danger small font-weight-bold float-right" id="national_id_error" style="display: none;"></code>
+    <label class="font-weight-bold" for="medicine_quantity">Medicine Quantity :<span class="star">*</span></label>
+    <input type="text" class="form-control" placeholder="Medicine Quantity" name="medicine_quantity" id="medicine_quantity" onblur="validate_integers(this.value, 'medicine_quantity_error');" required>
+    <code class="text-danger small font-weight-bold float-right" id="medicine_quantity_error" style="display: none;"></code>
   </div>
 </div>
 
-<div id="birth_certificate"class="row col col-lg-5" style="display:none">
+<div class="row col col-lg-5" >
   <div class="col col-md-12 form-group">
-    <label class="font-weight-bold" for="certificate_no">Enter Certificate No. :<span class="star">*</span></label>
-    <input type="text" class="form-control" placeholder="Birth Certificate" name="certificate_no" id="certificate_no" onblur ="validate_identification(this.value, 'birth_certificate_error');" required>
-    <code class="text-danger small font-weight-bold float-right" id="birth_certificate_error" style="display: none;"></code>
-  </div>
-</div>
-
-
-
-
-
-
-<div id=""class="row col col-lg-5">
-  <div class="col col-md-12 form-group">
-    <label class="font-weight-bold" for="email">Email :<span id="star1" class="star">*</span></label>
-    <input type="email" class="form-control" placeholder="Email Address" name="email" id="email" onblur ="validate_Email(this.value, 'Email_error');">
-    <code class="text-danger small font-weight-bold float-right" id="Email_error" style="display: none;"></code>
-  </div>
-</div>
-
-<div id=""class="row col col-lg-5">
-  <div class="col col-md-12 form-group">
-    <label class="font-weight-bold" for="contact">Contact Number :<span id="star1" class="star">*</span></label>
-    <input type="text" class="form-control" placeholder="Contact Number" name="contact" id="contact" onblur ="validateContactNumber(this.value, 'contact_error');">
-    <code class="text-danger small font-weight-bold float-right" id="contact_error" style="display: none;"></code>
-  </div>
-</div>
-
-<div id=""class="row col col-lg-5" style="display:none">
-  <div class="col col-md-12 form-group">
-    <label class="font-weight-bold" for="gender">Choose Gender :<span class="star">*</span></label>
-    <select class="form-control" id="gender" name="gender">
-      <option value="Male">Male</option>
-      <option value="female">Female</option>
+    <label class="font-weight-bold" for="medicine_unit">Choose Unit :<span class="star">*</span></label>
+    <select class="form-control" id="medicine_unit" name="medicine_unit" onchange="identification(this.value,'medicine_unit_error');">
+      <option value="Kilogram">Kgs</option>
+      <option value="Grams">Grams</option>
+      <option value="Liters">Liters</option>
+      <option value="Packets">Packets</option>
+      <option value="Mililiters">Mililiters</option>
     </select>
-    <code class="text-danger small font-weight-bold float-right" id="gender_error" style="display: none;"></code>
+    <code class="text-danger small font-weight-bold float-right" id="medicine_unit_error" style="display: none;"></code>
+  </div>
+</div>
+
+<div id=""class="row col col-lg-5">
+  <div class="col col-md-12 form-group">
+    <label class="font-weight-bold" for="expiry_date">Expiry Date :<span class="star">*</span></label>
+    <input type="date" class="form-control" placeholder="Expiry Date" name="expiry_date" id="expiry_date" onblur="validate_Date(this.value, 'expiry_date_error');">
+    <code class="text-danger small font-weight-bold float-right" id="expiry_date_error" style="display: none;"></code>
   </div>
 </div>
 
 
+    <input type="hidden" class="form-control" name="added_by" id="medicine_added_by" value="">
+    
 
 
 <div class="col col-md-12">
@@ -115,9 +69,9 @@ if(isset($action)){
 <div class="row col col-md-12">
   &emsp;
   <div class="form-group m-auto col col-md-5" >
-    <center><button class="btn btn-primary" id="upload_btn" onclick="register()" style="margin-bottom: 2%;">Register</button></center>
+    <center><button class="btn btn-primary" id="add_medicine_btn" onclick="add_medicine()" style="margin-bottom: 2%;">Add Medicine</button></center>
   </div>
-
+</form>
 <?php
     }
     else if ($action=='view') {

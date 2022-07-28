@@ -1,6 +1,6 @@
 <div class="container">
-	<div class="CenterDIV d-block">
-        <dialog class="" style="max-width: 30%;">
+	<div class="CenterDIV d-block" style="">
+        <dialog class="" style="max-width: 50%;">
             <form class="cashier-edit1 col-md-12" id="cashier-edit1" action="#" method="post">
 
              
