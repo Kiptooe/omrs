@@ -1,6 +1,3 @@
-<?php 
-echo view('navigation.php');
-?>
       <div class="container">
         <!-- header section -->
         <?php
