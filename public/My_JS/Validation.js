@@ -44,6 +44,46 @@ function validatelogin() {
     
 }
 
+function validate_Date(date,error){
+
+  var today1=new Date();
+    var today2=new Date(date);
+
+
+
+    var result = document.getElementById(error);
+
+    result.style.display = "block";
+
+
+    if (date.trim()==="") {
+    result.innerHTML="invalid date"
+    isValid=false;
+    return false;
+
+
+
+
+    }
+        
+       if (today2.getTime()<today1.getTime()){
+            result.innerHTML="Date must be greater than today's date.";
+          isValid=false;
+          return false;
+
+
+        }
+        else {
+            result.style.display = "none";
+
+          isValid=true;
+          return true;
+
+
+        }
+  }
+
+
 
 function validate_integers(int,error){
 

@@ -58,9 +58,15 @@
                     echo $session_expires;
                   }
 
+              if (!isset($_SESSION)) {
+                // code...
+                session_start();
+              }
+
               $alphaNumeric="12345abcdefGHIJKL6789mnopqr0STUVWXyZ";
         
-              $_SESSION['code']=substr(str_shuffle($alphaNumeric),0,5);
+              $code=substr(str_shuffle($alphaNumeric),0,5);
+
             ?>
           </div>
 
@@ -68,13 +74,13 @@
         
         <div id="reset-pass-div" class="card-footer">
           <div class="text-center">
-            <a href="/home/pages?pass=<?= $_SESSION['code'];?>" class="btn-edit-pass text-light" style="cursor: pointer;">Forgot password?</a>
+            <a href="/home/pages/<?= $code;?>?pass=<?= $code;?>" class="btn-edit-pass text-light" style="cursor: pointer;">Forgot password?</a>
           </div>
         </div> <!-- cord-footer class -->
 
         <div id="register-div" class="card-footer font-weight-bold" style="display:none;">
           <div class="text-center">
-            <a href="/home/pages?reg=<?= $_SESSION['code'];?>" class="btn-edit-pass text-light" style="cursor: pointer;">Register</a>
+            <a href="/home/pages/<?= $code;?>?reg=<?= $code;?>" class="btn-edit-pass text-light" style="cursor: pointer;">Register</a>
           </div>
         </div> <!-- cord-footer class -->
 

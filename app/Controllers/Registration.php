@@ -1,25 +1,12 @@
 <?php
 
 namespace App\Controllers;
-// use App\Controllers\BaseController;
 use App\Models\tblAdmin;
 use App\Models\tblPatient;
 use App\Models\tblEmployee;
 use App\Models\tblRole;
-// use App\Models\adult_employees;
-// use App\Models\root;
-// use App\Models\adult_registration;
-// use App\Models\children_registration;
-// use App\Models\adult_images;
-// use App\Models\child_images;
-// use App\Models\arch_dioces;
-// use App\Models\dioces;
-// use App\Models\mission;
-// use App\Models\continent;
-// use App\Models\beneficiary;
-// use App\Models\beneficiary_image;
-// use App\Models\beneficiary_registration;
-
+use App\Models\tblMedicine;
+use App\Models\tblUnit;
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
@@ -312,7 +299,6 @@ class Registration extends Home
                                 
             return true;                    
         }catch(Exception $e){
-            // echo 'Not sent'. $e->ErrorInfo;
 
             return false;
         }
@@ -321,4 +307,95 @@ class Registration extends Home
     }
 
 
+
+    function postMedicine(){
+
+        $registration=new registration();
+        $tblMedicine=new tblMedicine();
+        $tblUnit=new tblUnit();
+
+        helper('form');
+
+        $unit_name=$this->request->getPost('medicine_unit');
+
+        $unit_data=$tblUnit->where('unit_name',$unit_name)->first();
+
+        if (!$unit_data) {
+            // code...
+
+            $unit_data=['unit_name'=>$unit_name];
+
+            $inserted=$tblUnit->save($unit_data);
+
+            if (!$inserted) {
+                // code...
+                $message="<b style='color:red;'>Failled</b>!!!: Unknown Error Occured.";
+
+                $registration->postMessage($message);
+
+            }
+
+            $unit_data=$tblUnit->where('unit_name',$unit_name)->first();
+
+        }
+
+
+        $data=[
+                'medicine_name'=>$this->request->getPost('medicine_name'),
+                'medicine_quantity'=>$this->request->getPost('medicine_quantity'),
+                'medicine_price'=>$this->request->getPost('medicine_price'),
+                'added_by'=>$this->request->getPost('added_by'),
+                'unit_id'=>$unit_data['unit_id'],
+                'expiry_date'=>$this->request->getPost('expiry_date')
+            ];
+
+            
+
+            $registration->getMedicine_exist($data);
+
+            $inserted=$tblMedicine->save($data);
+
+
+            if ($inserted) {
+                // code...
+
+                $message="Registration of <b style='color:red;'> ".$data['medicine_name']."</b><b class='text-primary'>is Successful.</b>";
+
+               
+                    $registration->postMessage($message);
+
+            }
+            
+
+            $message="<b style='color:red;'>Failled</b>!!!: Registration <b style='color:red;'>NOT</b> Successful.";
+
+            $registration->postMessage($message);
+
+
+    }
+
+    function getMedicine_exist(array $data){
+
+        $registration=new registration();
+        $tblMedicine=new tblMedicine();
+
+
+
+
+        $medicine_exist=$tblMedicine->where('medicine_name',$data['medicine_name'])->where('is_deleted',0)->first();
+        
+
+        if ($medicine_exist) {
+            // code...
+            $message="<b style='color:red;'>Registration Failled</b>!!!: Medicine <b style='color:blue;'>".$data['medicine_name']."</b> had already been <b style='color:red;'>Registered</b>.";
+
+            $registration->postMessage($message);
+        }
+
+        
+    }
+
+
 }
+
+

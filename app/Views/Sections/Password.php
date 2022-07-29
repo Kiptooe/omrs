@@ -1,6 +1,6 @@
 <div class="container">
-	<div class="CenterDIV d-block">
-        <dialog class="" style="max-width: 30%;">
+	<div class="CenterDIV d-block" style="">
+        <dialog class="" style="max-width: 50%;">
             <form class="cashier-edit1 col-md-12" id="cashier-edit1" action="#" method="post">
 
              
@@ -40,7 +40,7 @@
                 <a class="btn btn-danger btn-sm text-light font-weight-bold form-control" id="btn-code" onclick="password_reset(1)">Send Code</a>
                 <a style="display:none;" class="btn btn-danger btn-sm text-light font-weight-bold form-control" id="btn-conf-code" onclick="password_reset(2)">Confirm Code</a>
                 <a style="display:none;" class="btn btn-danger btn-sm text-light font-weight-bold form-control" id="btn-new-pass" onclick="password_reset(3)">Save</a><br>
-                <label style="display: none ;" id="psw-msg">Password updated successfully. Go back to <a href="/home/index">Login</a></label>
+                <label style="display: none ;" id="psw-msg">Password updated successfully. Go back to <a href="/home/home_page">Login</a></label>
 
               </form>
               <div id="password_update" class=" col-md-12 h5 m-2 text-success font-weight-bold text-center" style="font-family: sans-serif;">

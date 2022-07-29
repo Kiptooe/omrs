@@ -51,6 +51,49 @@ function register() {
 
 
 
+function add_medicine() {
+	
+  $("#medicine_acknowledgement").html('');
+
+  var medicine_name = $("#medicine_name").val();
+  var medicine_price = $("#medicine_price").val();
+  var medicine_quantity = $("#medicine_quantity").val();
+  var expiry_date = $("#expiry_date").val();
+
+
+  if(!validate_Name(medicine_name, "medicine_name_error"))
+    medicine_name.focus();
+  else if(!validate_Name(medicine_price, "medicine_price_error"))
+    medicine_price.focus();
+  else if(!validate_integers(medicine_quantity, "medicine_quantity_error"))
+    medicine_quantity.focus();
+  else if(!validate_Date(expiry_date, "expiry_date_error"))
+    expiry_date.focus();
+  else {
+
+    // alert()
+
+
+     $.ajax({
+            url : "/registration/medicine",
+            type : 'POST',
+            data :  $('#add-medicine').serialize(),
+            success : function(msg) {
+
+                $("#medicine_acknowledgement").html(msg);
+
+            }
+
+            
+        });
+
+  }
+
+}
+
+
+
+
 
 
 

@@ -12,9 +12,8 @@
             }
         ?>
 
-        <?= $_SESSION['login_data']['firstname'].' '.$_SESSION['login_data']['lastname']?>
+         <?php //$_SESSION['login_data']['firstname'].' '.$_SESSION['login_data']['lastname']?>
     </div>
 
            
-</nav>  
-           
+</nav> 
