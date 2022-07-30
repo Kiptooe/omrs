@@ -30,7 +30,6 @@
 
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
-    <link rel="stylesheet" href="/My_CSS/style3.css">
 
 
   	
@@ -38,7 +37,7 @@
   	<?= link_tag("/My_CSS/bootstrap.css")?>
   	<?= link_tag("/My_CSS/style1.css")?>
   	<?= link_tag("/My_CSS/style2.css")?>
-
+	<?= link_tag("/My_CSS/style3.css")?>
   	
 
 
