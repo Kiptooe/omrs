@@ -39,17 +39,11 @@ echo view('navigation');
 
         <!-- form content -->
         <div class="row">
-          <!-- <div class="row col col-xs-8 col-sm-8 col-md-8 col-lg-8"> -->
-
-          
 
 
             <?php
               function createSection1($location, $title, $count = 0) {
                 
-                  
-                
-
                 ?>
 
                   <div class="col-xs-12 col-sm-12 col-md-12 col-lg-3" style="padding: 10px;display:inline-block;word-break: break-all;">
@@ -64,15 +58,13 @@ echo view('navigation');
                 
                   <?php
               }
-              createSection1('/home/pages/?tsm='.$_SESSION['code'], 'Total Staff Members', count($dashboard_data['all_employees_data']));
-              createSection1('/home/pages/?tpa='.$_SESSION['code'], 'Total Patients', count($dashboard_data['patient_data']));
-              createSection1('/home/pages/?td='.$_SESSION['code'], 'Total Doctors', count($dashboard_data['doctors_data']));
-              createSection1('/home/pages/?tn='.$_SESSION['code'], 'Total Nurses', count($dashboard_data['nurse_data']));
-              createSection1('/home/pages/?tlt='.$_SESSION['code'], 'Total Lab Technicians', count($dashboard_data['lab_tech_data']));
-              createSection1('/home/pages/?tr='.$_SESSION['code'], 'Total Receptionists', count($dashboard_data['receptionist_data']));
-              // createSection1('/home/pages/?tp='.$_SESSION['code'], 'Total Pharmacists', count($dashboard_data['doctors_data']));
-              createSection1('/home/pages/?tam='.$_SESSION['code'], 'Total Available Medicine', 0);
-              createSection1('/home/pages/?tem='.$_SESSION['code'], 'Total Expired Medicine',0);
+              createSection1('/home/pages/'.$_SESSION['code'].'?tsm='.$_SESSION['code'], 'Total Staff Members', count($dashboard_data['all_employees_data']));
+              createSection1('/home/pages/'.$_SESSION['code'].''.$_SESSION['code'].'?tpa='.$_SESSION['code'], 'Total Patients', count($dashboard_data['patient_data']));
+              createSection1('/home/pages/'.$_SESSION['code'].'?td='.$_SESSION['code'], 'Total Doctors', count($dashboard_data['doctors_data']));
+              createSection1('/home/pages/'.$_SESSION['code'].'?tn='.$_SESSION['code'], 'Total Nurses', count($dashboard_data['nurse_data']));
+              createSection1('/home/pages/'.$_SESSION['code'].'?tr='.$_SESSION['code'], 'Total Receptionists', count($dashboard_data['receptionist_data']));
+              createSection1('/home/pages/'.$_SESSION['code'].'?tam='.$_SESSION['code'], 'Total Available Medicine', count($dashboard_data['medicine_data']));
+              createSection1('/home/pages/'.$_SESSION['code'].'?tem='.$_SESSION['code'], 'Total Expired Medicine',count($dashboard_data['expired_medicine_data']));
            
             ?>
 
@@ -90,20 +82,13 @@ echo view('navigation');
                     if($con) {
                       $date = date('Y-m-d');
                   ?>
-                  <tr>
+                  
+                  <tr >
                     <?php
-                      $total = 0;
-                    ?>
-                    <th>Total Medicine Sales</th>
-                    <th class="text-success">KShs. <?php echo $total; ?></th>
-                  </tr>
-                  <tr>
-                    <?php
-                      $total = 0;
                     }
                     ?>
-                    <th>Total Patient Visit</th>
-                    <th class=""><?php echo $total; ?></th>
+                    <th class="bg-success text-light">Total Patient Visit</th>
+                    <th class="bg-info"><?= count($dashboard_data['patient_visit_data']); ?></th>
                   </tr>
                 </tbody>
               </table>
@@ -144,11 +129,9 @@ echo view('navigation');
                 </div>
               <?php
             }
-            createSection2('group', '/home/pages/?reg='.$_SESSION['code'], 'Registration');
-            // createSection2('group', 'add_customer.php', 'Register New Patient');
-            createSection2('shopping-bag', '/home/pages/?anm='.$_SESSION['code'], 'Add New Medicine');
-            // createSection2('book', '/home/pages/?msr='.$_SESSION['code'], 'Medicine Sales Report');
-            createSection2('book', '/home/pages/?gmr='.$_SESSION['code'], 'General Medical Report');
+            createSection2('group', '/home/pages/'.$_SESSION['code'].'?reg='.$_SESSION['code'], 'Registration');
+            createSection2('shopping-bag', '/home/pages/'.$_SESSION['code'].'?anm='.$_SESSION['code'], 'Add New Medicine');
+            createSection2('book', '/home/pages/'.$_SESSION['code'].'?gmr='.$_SESSION['code'], 'General Medical Report');
           ?>
 
         </div>

@@ -81,3 +81,32 @@ function dashboard_date(){
   
 
   }
+
+  function search_patient(){
+
+    var id=$('#search_id').val();
+
+    window.location.href='/home/role_pages/'+id+'/rtye34?nv='+id;
+  }
+
+  function patient_visit(){
+
+    $('#management_acknowledgement').html('Loading...');
+
+
+    var id=$('#Patient_id').val();
+
+
+    $.ajax({
+            url : "/home/patient_visits/"+id,
+            type : 'POST',
+            success : function(msg) {
+
+            $('#management_acknowledgement').html(msg);
+
+
+            }
+            
+        });
+    
+  }

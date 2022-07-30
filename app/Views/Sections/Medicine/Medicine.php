@@ -1,12 +1,14 @@
 <?php
+
 if(isset($action)){
 
     if($action=='add'){
+echo view('navigation');
 
        
 
 ?>
-<form id="add-medicine">
+<form id="add-medicine" method="post">
 <div id=""class="row col col-lg-5 "  >
   <div class="col col-md-12 form-group">
     <label class="font-weight-bold" for="medicine_name">Medicine Name :<span class="star ">*</span></label>
@@ -72,10 +74,23 @@ if(isset($action)){
     <center><button class="btn btn-primary" id="add_medicine_btn" onclick="add_medicine()" style="margin-bottom: 2%;">Add Medicine</button></center>
   </div>
 </form>
+
+<div class="col-md-12 h5 text-success font-weight-bold text-center" style="font-family: sans-serif;">
+  
+  <p id="medicine_acknowledgement"></p>
+  <p id="mb_refresh" style="display: none;"><a href="" >Refresh Page</a></p>
+</div>
 <?php
     }
     else if ($action=='view') {
         # code...
+
+    $timezone=app_timezone();
+    date_default_timezone_set($timezone);
+    $timezone=date_default_timezone_get();
+
+    $date=date('Y-m-d');
+
 
 ?>
 
@@ -87,11 +102,11 @@ if(isset($action)){
                     <th style="width: 3%;">No.</th>
                     <th style="width: 16%;">Medicine Name</th>
                     <th style="width: 11%;">Quantity</th>
+                    <th style="width: 11%;">Unit</th>
                     <?php
                         if(isset($expired)){
                     ?>
                     <th style="width: 7%;">Price</th>
-                    <th style="width: 7%;">Added By</th>
                     <?php
                         }
                     ?>
@@ -116,40 +131,49 @@ if(isset($action)){
 
             <tbody id="customers_div">
                   <?php
-                    if (isset($medicine_data) && count($medicine_data)>0) {
+                    if (isset($dashboard_data['medicine_data']) && count($dashboard_data['medicine_data'])>0) {
                       // code...
                       $number=0;
 
-                      for ($i=0; $i <count($medicine_data) ; $i++){
+                      for ($i=0; $i <count($dashboard_data['medicine_data']) ; $i++){
                         $number +=1;
 
                         ?>
                         <tr>
                           <td><?= $number;?></td>
-                          <td><?= $medicine_data[$i]['medicine_name']?></td>
-                          <td><?= $medicine_data[$i]['quantity']?></td>
+                          <td><?= $dashboard_data['medicine_data'][$i]['medicine_name']?></td>
+                          <td><?= $dashboard_data['medicine_data'][$i]['medicine_quantity']?></td>
+                          <td><?= $dashboard_data['unit_data'][$i]['unit_name']?></td>
                           <?php
                             if(isset($expired)){
                           ?>
-                          <td><?= $medicine_data[$i]['price']?></td>
-                          <td><?= $medicine_data[$i]['added_by']?></td>
+                          <td><?= $dashboard_data['medicine_data'][$i]['medicine_price']?></td>
                           <?php
                               }
                           ?>
-                          <td><?= $medicine_data[$i]['added_at']?></td>
+                          <td><?= $dashboard_data['medicine_data'][$i]['added_at']?></td>
                           <?php
                             if(isset($expired)){
                           ?>
-                            <td><?= $medicine_data[$i]['updated_at']?></td>
+                            <td><?= $dashboard_data['medicine_data'][$i]['updated_at']?></td>
 
                           <?php
                               }
                           ?>
-                          <td><?= $medicine_data[$i]['expiry_date']?></td>
+                          <td><?= $dashboard_data['medicine_data'][$i]['expiry_date']?></td>
                           <?php
                             if(isset($expired)){
                           ?>
-                          <td><?= $medicine_data[$i]['Expired']?></td>
+                           <td><?php
+                            if ($dashboard_data['medicine_data'][$i]['expiry_date']<=$date) {
+                              // code...
+                              echo "Yes";
+                            }
+                            else{
+                              echo "No";
+                            }
+                            ?>
+                           </td>
                           <?php
                               }
                           ?>

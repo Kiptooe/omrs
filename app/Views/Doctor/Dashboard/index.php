@@ -1,5 +1,5 @@
 <?php 
-echo view('navigation.php');
+echo view('navigation');
 ?>
       <div class="container">
         <!-- header section -->
@@ -39,40 +39,27 @@ echo view('navigation.php');
 
         <!-- form content -->
         <div class="row">
-          <!-- <div class="row col col-xs-8 col-sm-8 col-md-8 col-lg-8"> -->
 
           
 
 
             <?php
-              function createSection1($location, $title, $count = 0) {
-                
-                  
-                
-
+              function createSection2($icon, $location, $title) {
+              
                 ?>
-
-                  <div class="col-xs-12 col-sm-12 col-md-12 col-lg-3" style="padding: 10px;display:inline-block;word-break: break-all;">
-                    <div class="dashboard-stats" onclick="location.href='<?=$location?>'">
-                      <a class="text-dark text-decoration-none" href="<?=$location?>">
-                        <span class="h4 text-success"><?= $count?>'</span>
-                        <span class="h6"><i class="fa fa-play fa-rotate-270 text-warning"></i></span>
-                        <div class="small font-weight-bold"><?=$title?></div>
-                      </a>
+                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4" style="padding: 10px;">
+                  <div class="dashboard-stats" style="padding: 30px 15px;" onclick="location.href='<?=$location?>'">
+                    <div class="text-center">
+                      <span class="h1"><i class="fa fa-<?=$icon?> p-2"></i></span>
+                      <div class="h5 font-weight-bold"><?=$title?></div>
                     </div>
                   </div>
-                
-                  <?php
-              }
-              createSection1('/home/pages/?tsm='.$_SESSION['code'], 'Patients', count($dashboard_data['all_employees_data']));
-              createSection1('/home/pages/?tpa='.$_SESSION['code'], 'Total Patients', count($dashboard_data['patient_data']));
-              createSection1('/home/pages/?td='.$_SESSION['code'], 'Total Doctors', count($dashboard_data['doctors_data']));
-              createSection1('/home/pages/?tn='.$_SESSION['code'], 'Total Nurses', count($dashboard_data['nurse_data']));
-              createSection1('/home/pages/?tlt='.$_SESSION['code'], 'Total Lab Technicians', count($dashboard_data['lab_tech_data']));
-              createSection1('/home/pages/?tr='.$_SESSION['code'], 'Total Receptionists', count($dashboard_data['receptionist_data']));
-              // createSection1('/home/pages/?tp='.$_SESSION['code'], 'Total Pharmacists', count($dashboard_data['doctors_data']));
-              createSection1('/home/pages/?tam='.$_SESSION['code'], 'Total Available Medicine', 0);
-              createSection1('/home/pages/?tem='.$_SESSION['code'], 'Total Expired Medicine',0);
+                </div>
+              <?php
+            }
+            createSection2('group', '/home/pages/'.$_SESSION['code'].'?reg='.$_SESSION['code'], 'Attend to Patient');
+            createSection2('book', '/home/role_pages/'.$_SESSION['code'].'?nv='.$_SESSION['code'], 'Attended Patients');
+            createSection2('book', '/home/pages/'.$_SESSION['code'].'?pr='.$_SESSION['code'], 'Patient Report');
            
             ?>
 
@@ -90,20 +77,13 @@ echo view('navigation.php');
                     if($con) {
                       $date = date('Y-m-d');
                   ?>
-                  <tr>
+                  
+                  <tr >
                     <?php
-                      $total = 0;
-                    ?>
-                    <th>Total Medicine Sales</th>
-                    <th class="text-success">KShs. <?php echo $total; ?></th>
-                  </tr>
-                  <tr>
-                    <?php
-                      $total = 0;
                     }
                     ?>
-                    <th>Total Patient Visit</th>
-                    <th class=""><?php echo $total; ?></th>
+                    <th class="bg-success text-light">Total Patient Visit</th>
+                    <th class="bg-info"><?= count($dashboard_data['patient_visit_data']); ?></th>
                   </tr>
                 </tbody>
               </table>
@@ -125,35 +105,5 @@ echo view('navigation.php');
           </div>
 
         </div>
-
-        <hr style="border-top: 2px solid #ff5252;">
-
-        <div class="row">
-
-          <?php
-            function createSection2($icon, $location, $title) {
-              
-                ?>
-                <div class="col-xs-12 col-sm-6 col-md-6 col-lg-4" style="padding: 10px;">
-              		<div class="dashboard-stats" style="padding: 30px 15px;" onclick="location.href='<?=$location?>'">
-              			<div class="text-center">
-                      <span class="h1"><i class="fa fa-<?=$icon?> p-2"></i></span>
-              				<div class="h5 font-weight-bold"><?=$title?></div>
-              			</div>
-              		</div>
-                </div>
-              <?php
-            }
-            createSection2('group', '/home/pages/?reg='.$_SESSION['code'], 'Registration');
-            // createSection2('group', 'add_customer.php', 'Register New Patient');
-            createSection2('shopping-bag', '/home/pages/?anm='.$_SESSION['code'], 'Add New Medicine');
-            // createSection2('book', '/home/pages/?msr='.$_SESSION['code'], 'Medicine Sales Report');
-            createSection2('book', '/home/pages/?gmr='.$_SESSION['code'], 'General Medical Report');
-          ?>
-
-        </div>
-        <!-- form content end -->
-
-        <hr style="border-top: 2px solid #ff5252;">
 
       </div>
