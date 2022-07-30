@@ -204,6 +204,8 @@ class Login extends Home
             $folder=$_SESSION['role'];
             $_SESSION['folder']=$_SESSION['role'];
 
+            $all['login_data']=$_SESSION['login_data'];
+
 
         // $_SESSION['logedIn_data']=$_SESSION['login_data'];
 

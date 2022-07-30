@@ -64,7 +64,7 @@ echo view('navigation');
                 
                   <?php
               }
-              createSection1('/home/pages/?tsm='.$_SESSION['code'], 'Total Staff Members', count($dashboard_data['all_employees_data']));
+              createSection1('/home/pages?tsm='.$_SESSION['code'], 'Total Staff Members', count($dashboard_data['all_employees_data']));
               createSection1('/home/pages/?tpa='.$_SESSION['code'], 'Total Patients', count($dashboard_data['patient_data']));
               createSection1('/home/pages/?td='.$_SESSION['code'], 'Total Doctors', count($dashboard_data['doctors_data']));
               createSection1('/home/pages/?tn='.$_SESSION['code'], 'Total Nurses', count($dashboard_data['nurse_data']));

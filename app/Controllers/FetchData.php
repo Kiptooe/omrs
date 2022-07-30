@@ -97,6 +97,7 @@ class FetchData extends BaseController
 
         $all['patient_data']=[];//$tblPatient->findAll();
 
+
         
         // // ALL MEDICINES
 

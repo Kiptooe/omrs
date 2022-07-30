@@ -79,6 +79,10 @@ class Home extends BaseController
 
         $fetchData=new FetchData();
 
+        // $all['login_data']=$_SESSION['login_data'];
+
+
+
         $all['dashboard_data']=$fetchData->getAdminHomePage();
 
 
@@ -86,6 +90,9 @@ class Home extends BaseController
             // code...
 
             $all['title']='Registration';
+
+            // $all['header']='Registration';
+            $all['login_data']=$_SESSION['login_data'];
 
 
             if ($_REQUEST['reg']==$value) {
