@@ -44,32 +44,9 @@ class TblAdmin extends Model
         return $data;
     }
 
+    
 
-    // public function login(array $data){
-
-    //      $admin=$this->asArray()
-    //                 ->where('national_id',$data['national_id'])
-    //                 ->first();
-
-    //      if(!$admin){
-    //             return false;
-    //         }
-    //         else{
-
-    //             $verify=password_verify($data['password'], $admin['password']);
-
-    //             if (! $verify) {
-    //                 // code...
-
-    //                 return false;
-    //             }
-    //             else{
-    //                 return $admin;
-    //             }
-    //         }
-    // }
-
-    public function verify_admin(array $data){
+    public function verify_admin(array $data,$value=null){
 
         $tbl_empty=$this->asArray()->findAll();
 
@@ -95,6 +72,18 @@ class TblAdmin extends Model
                     return 1;
                 }
                 else{
+
+                    if ($value) {
+                        // code...
+                        $verify=password_verify($data['key'], $admin['key']);
+
+                        if (! $verify) {
+                            // code...
+
+                            return false;
+                        }
+
+                    }
                     return $admin;
                 }
             }

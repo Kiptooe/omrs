@@ -6,8 +6,11 @@ use App\Controllers\registration;
 use App\Controllers\login;
 use App\Models\tblAdmin;
 use App\Models\tblPatient;
+use App\Models\tblPatientVisit;
 use App\Models\tblEmployee;
 use App\Models\tblRole;
+use App\Models\tblMedicine;
+use App\Models\tblUnit;
 
 class FetchData extends BaseController
 {
@@ -19,8 +22,14 @@ class FetchData extends BaseController
         $registration=new registration();
         $tblAdmin=new tblAdmin();
         $tblPatient=new tblPatient();
+        $tblPatientVisit=new tblPatientVisit();
         $tblEmployee=new tblEmployee();
+        $tblMedicine=new tblMedicine();
+        $tblUnit=new tblUnit();
         $home=new home();
+
+         $date=$home->getDate('now');
+
 
 
         // ALL EMPLOYEES
@@ -95,26 +104,55 @@ class FetchData extends BaseController
 
         // ALL PATIENTS
 
-        $all['patient_data']=[];//$tblPatient->findAll();
+        $all['patient_data']=$tblPatient->findAll();
+
+        if ($all['patient_data']) {
+            // code...
+
+            for ($i=0; $i <count($all['patient_data']) ; $i++) { 
+                // code...
+                $all['visits_data'][$i]=$tblPatientVisit->orderBy('visit_date','DESC')->where('patient_id',$all['patient_data'][$i]['patient_id'])->findAll();
+                for ($j=0; $j <count($all['visits_data']) ; $j++) { 
+                    // code...
+                    $all['visits_data'][$j]=$all['visits_data'][$i][$j];
+                }
+            }
+
+
+        }
+
+
+        //PATIENT VISIT
+
+        $today=$date->toDateString();
+
+        $all['patient_visit_data']=$tblPatientVisit->where('visit_date',$today)->findAll();
+
 
 
         
-        // // ALL MEDICINES
+        // ALL MEDICINES
 
-        // $role_data=$tblRole->where('role_name','Doctor')->first();
 
-        // if ($role_data) {
-        //     // code...
-        // $all['doctors_data']=$tblEmployee->where('role_id',$role_data['role_id'])->findAll();
+        $all['medicine_data']=$tblMedicine->findAll();
+
+        if ($all['medicine_data']) {
+            // code...
+
+            for ($i=0; $i <count($all['medicine_data']) ; $i++) { 
+                // code...
+
+                $all['unit_data'][$i]=$tblUnit->where('unit_id',$all['medicine_data'][$i]['unit_id'])->first();
+            }
+        }
 
         
 
-        // // ALL EXPIRED MEDICINES
-        // $role_data=$tblRole->where('role_name','Doctor')->first();
+        // ALL EXPIRED MEDICINES
 
-        // if ($role_data) {
-        //     // code...
-        // $all['doctors_data']=$tblEmployee->where('role_id',$role_data['role_id'])->findAll();
+        $all['expired_medicine_data']=$tblMedicine->where('expiry_date <=',$date)->findAll();
+
+
 
 
         return $all;

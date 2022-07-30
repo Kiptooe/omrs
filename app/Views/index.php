@@ -51,7 +51,7 @@
               <input type="button" id="login-btn" class="btn btn-default btn-default btn-block btn-custom" value="Login" onclick="validatelogin()">
             </div>
           </form> 
-          <div id="login" class="col-md-12 h5 m-0 text-dark font-weight-bold text-center" style="font-family: sans-serif;">
+          <div id="login" class="col-md-12 h5 m-0 text-light font-weight-bold text-center" style="font-family: sans-serif;">
             <?php
                   if (isset($session_expires) && strlen($session_expires) >0) {
                     // code...

@@ -1,3 +1,5 @@
+<?php
+?>
 <div class="container">
 	<div class="CenterDIV d-block" style="">
         <dialog class="" style="max-width: 50%;">

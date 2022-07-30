@@ -13,6 +13,6 @@ class TblMedicine extends Model
   
 	protected $table='tbl_medicine';
 	protected $primaryKey='medicine_id';
-	protected $allowedFields=['medicine_name','is_deleted','medicine_unit','medicine_price','medicine_quantity','expiry_date','updated_at'];
+	protected $allowedFields=['medicine_name','is_deleted','unit_id','medicine_price','medicine_quantity','expiry_date','updated_at'];
 
 }

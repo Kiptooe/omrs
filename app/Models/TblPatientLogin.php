@@ -13,6 +13,6 @@ class TblPatientLogin extends Model
   
 	protected $table='tbl_patient_login';
 	protected $primaryKey='login_id';
-	protected $allowedFields=['admin_id','is_deleted','ip_address','login_time','logout_time','login_time'];
+	protected $allowedFields=['patient_id','is_deleted','ip_address','login_time','logout_time','login_time'];
 
 }

@@ -3,6 +3,7 @@
 namespace App\Controllers;
 use App\Models\tblAdmin;
 use App\Models\tblPatient;
+use App\Models\tblPatientVisit;
 use App\Models\tblEmployee;
 use App\Models\tblRole;
 use App\Models\tblMedicine;
@@ -31,6 +32,7 @@ class Registration extends Home
 
         $tblRole=new tblRole();
         $registration=new registration();
+        $tblPatientVisit=new tblPatientVisit();
         $tblAdmin=new tblAdmin();
         $tblPatient=new tblPatient();
         $tblEmployee=new tblEmployee();
@@ -131,7 +133,18 @@ class Registration extends Home
 
             }
             else if($role=="Patient"){
+
                 $inserted=$tblPatient->save($data);
+
+                $patient_exist=$tblPatient->search($username);
+
+
+                $visit_data=[
+                    'patient_id'=>$patient_exist['patient_id']
+                ];
+
+                $inserted=$tblPatientVisit->save($visit_data);
+
 
             }
             else{
@@ -139,7 +152,6 @@ class Registration extends Home
 
             }
 
- 
 
 
 
@@ -156,7 +168,16 @@ class Registration extends Home
 
                 if ($email_sent) {
                     // code...
+                    echo "string";exit();
                     $registration->postMessage($message);
+
+                }
+                else{
+
+                    $patient_exist=$tblPatient->search($username);
+
+                    $tblPatient->where('patient_id',$patient_exist['patient_id'])->delete();
+
 
                 }
                 
@@ -225,12 +246,14 @@ class Registration extends Home
             }
             else if ($data['national_id']) {
                 // code...
-                 $national_id_exist=$tblPatient->where('national_id',$data['national_id'])->first();
+                $national_id_exist=$tblPatient->where('national_id',$data['national_id'])->first();
                 $email_exist=$tblPatient->where('email',$data['email'])->first();
                 $mobile_number_exist=$tblPatient->where('mobile_number',$data['mobile_number'])
                                         ->first();
 
             }
+
+            
 
         }
         else{
@@ -394,6 +417,9 @@ class Registration extends Home
 
         
     }
+
+
+
 
 
 }

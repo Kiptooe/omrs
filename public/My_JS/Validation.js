@@ -90,7 +90,12 @@ function validate_integers(int,error){
   var result = document.getElementById(error);
   result.style.display = "block";
 
-  if (isNaN(int)) {
+  if (int.trim()=='') {
+    result.innerHTML = "Must be filled out!";
+
+  }
+
+  else if (isNaN(int)) {
     result.innerHTML = "Must be only numeric!";
 
     return false;
@@ -135,19 +140,21 @@ function identification(id_value,id_element){
 
 
   
-  if (id_value==="national_id") {
+  if (id_value=="national_id") {
 
-    document.getElementById('national_id').style.display = "block";
-    document.getElementById('birth_certificate').style.display = "none";
+    $('#national_id').css('display','block');
+    $('#birth_certificate').css('display','none');
   }
-  else if (id_value==="birth_certificate"){
-    document.getElementById('birth_certificate').style.display = "block";
-    document.getElementById('national_id').style.display = "none";
+  else if (id_value=="birth_certificate"){
+    $('#birth_certificate').css('display','block');
+    $('#national_id').css('display','none');
 
   }
   
   
 }
+
+
 
 function validateContactNumber(contact_number, error,second=null) {
 
@@ -486,4 +493,20 @@ function password_reset(value){
       
     }
   });
+}
+
+function identify(value){
+
+if (value=="national_id") {
+
+    $('#national_id').css('display','block');
+    $('#birth_certificate').css('display','none');
+    $('#certificate_no').val('');
+  }
+  else if (value=="birth_certificate"){
+    $('#birth_certificate').css('display','block');
+    $('#national_id').css('display','none');
+    $('#national_id').val('');
+
+  }
 }

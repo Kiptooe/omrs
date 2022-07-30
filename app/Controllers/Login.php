@@ -7,9 +7,12 @@ use App\Controllers\home;
 use App\Controllers\fetchData;
 // use App\Controllers\Sections\home_;
 use App\Models\TblAdmin;
+use App\Models\TblAdminLogin;
 use App\Models\TblRole;
 use App\Models\tblEmployee;
+use App\Models\tblEmployeeLogin;
 use App\Models\tblPatient;
+use App\Models\tblPatientLogin;
 // use App\Models\db_cashier;
 // use App\Models\db_branch;
 // use App\Models\db_attendance;
@@ -45,53 +48,88 @@ class Login extends Home
     }
 
 
-    // public function index($address,$branch_id)
-    // {
-    //     $db_login=new db_login();
-    //     $home=new home();
-    //     $login=new login();
+    public function getIndex($address,$role)
+    {
+        $tblAdminLogin=new tblAdminLogin();
+        $tblPatientLogin=new tblPatientLogin();
+        $tblEmployeeLogin=new tblEmployeeLogin();
+        $home=new home();
+        $login=new login();
 
         
-    //     $ip=$login->get_ip_address();
+        $ip=$login->get_ip_address();
 
         
 
-    //         $mydate=$home->date('now');
+            $mydate=$home->getDate('now');
+
+            if ($role=='Administrator') {
+                // code...
+                $login_details=[
+                'admin_id'=>$address,
+                'ip_address'=>$ip,
+                'login_time'=>$mydate,
+                'is_deleted'=>0
+                ];
+                $login_data=$tblAdminLogin->where('admin_id',$login_details['admin_id'])->first();
+
+                if ($login_data) {
+                                // code...
+                    $tblAdminLogin->update($login_data['login_id'],$login_details);
+
+                }
+                else{
+                    $tblAdminLogin->save($login_details);
+                }
+            }
+            else if ($role=='Patient') {
+                // code...
+                $login_details=[
+                'patient_id'=>$address,
+                'ip_address'=>$ip,
+                'login_time'=>$mydate,
+                'is_deleted'=>0
+                ];
+                $login_data=$tblPatientLogin->where('patient_id',$login_details['patient_id'])->first();
+
+                if ($login_data) {
+
+                    $tblPatientLogin->update($login_data['login_id'],$login_details);
+
+                }
+                else{
+                    $tblPatientLogin->save($login_details);
+                }
+            }
+            else if ($role='Employee') {
+                // code...
+                $login_details=[
+                'employee_id'=>$address,
+                'ip_address'=>$ip,
+                'login_time'=>$mydate,
+                'is_deleted'=>0
+                ];
+                $login_data=$tblEmployeeLogin->where('employee_id',$login_details['employee_id'])->first();
+
+                if ($login_data) {
+                                // code...
+                    
+
+                    $tblEmployeeLogin->update($login_data['login_id'],$login_details);
+
+                }
+                else{
+                    $tblEmployeeLogin->save($login_details);
+                }
+            }
 
 
-    //         $login_details=[
-    //             'cashier_id'=>$address,
-    //             'ip_address'=>$ip,
-    //             'login_time'=>$mydate,
-    //             'logout_time'=>$mydate,
-    //             'branch_id'=>$branch_id
-    //         ];
-    
-    //         $login_data=$db_login->where('cashier_id',$login_details['cashier_id'])->first();
-
-    //         if ($login_data) {
-    //                             // code...
-    //             $login_details1=[
-    //                     'cashier_id'=>$address,
-    //                     'ip_address'=>$ip,
-    //                     'login_time'=>$mydate,
-    //                     'branch_id'=>$branch_id,
-    //                     'is_deleted'=>0
-    //             ];
-
-
-    //             $db_login->update($login_data['login_id'],$login_details1);
-
-    //         }
-    //         else{
-    //             $db_login->save($login_details);
-    //         }
-
-    // }
+    }
 
    
 
     public function postValidate_data(){
+
 
         $tbl_role=new tblRole();
         $login=new login();
@@ -101,11 +139,10 @@ class Login extends Home
         $registration=new Registration();
         $home=new home();
 
-        $login->get_ip_address();
 
-        $time=$home->getDate('now');
+        // $time=$home->getDate('now');
 
-        $time=$time->toTimeString();
+        // $time=$time->toTimeString();
             
         $password=$this->request->getPost('password');
         $key=$this->request->getPost('key');
@@ -120,7 +157,7 @@ class Login extends Home
                 'key'=>$salt_key
             ];
     
-            $is_admin=$tbl_admin->verify_admin($login_data);
+            $is_admin=$tbl_admin->verify_admin($login_data,'ghg');
     
 
             $_SESSION['login_data']='';
@@ -139,7 +176,8 @@ class Login extends Home
                     if ($is_patient) {
                         # code...
 
-                        $login->index($is_patient['cashier_id']);
+                        $login->getIndex($is_patient['patient_id'],'Patient');
+
 
                         $_SESSION['login_data']=$is_patient;
                         $_SESSION['role']='Patient';
@@ -147,19 +185,20 @@ class Login extends Home
                         echo 1;exit();
 
                     }else{
-                        echo 'Invalid Username or Password';exit();
+                        echo 'Invalid Username or Password';
+                        exit();
                     }
 
 
                 }
                 else{
 
-                    // print_r($is_employee);exit();
-
                     $role_name=$tbl_role->where('role_id',$is_employee['role_id'])->first();
+                    $login->getIndex($is_employee['employee_id'],'Employee');
 
                     $_SESSION['login_data']=$is_employee;
                     $_SESSION['role']=$role_name['role_name'];
+
                     
                     echo 1;exit();
 
@@ -169,6 +208,7 @@ class Login extends Home
 
             }
             else{
+                $login->getIndex($is_admin['admin_id'],'Administrator');
 
                 $_SESSION['login_data']=$is_admin;
                 $_SESSION['role']='Administrator';
@@ -194,36 +234,30 @@ class Login extends Home
 
         
 
-        // $all['cashier_data']=$_SESSION['login_data'];
         $all['role_name']=$_SESSION['role'];
 
         setcookie("logedIn_data",json_encode($all),time()+1*24*60*60,"/");
 
-
         
-            $folder=$_SESSION['role'];
-            $_SESSION['folder']=$_SESSION['role'];
+        $folder=$_SESSION['role'];
+        $_SESSION['folder']=$_SESSION['role'];
 
             $all['login_data']=$_SESSION['login_data'];
 
 
-        // $_SESSION['logedIn_data']=$_SESSION['login_data'];
+        $all['logedIn_data']=$_SESSION['login_data'];
 
-        // $_SESSION['cashier_id']=$_SESSION['login_data']['cashier_id'];
 
 
         $all['dashboard_data']=$fetchData->getAdminHomePage();
 
-        // $home_=new home_();
-
-        // $home_->session_time();
 
         $all['title']=$_SESSION['role'];
 
         
         echo view('templete/head',$all);
         echo view($folder.'/dashboard/index');
-        echo view('templete/foot');
+        echo view('templete/foot');exit();
     }
 
 

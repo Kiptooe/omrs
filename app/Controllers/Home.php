@@ -5,9 +5,15 @@ use CodeIgniter\I18n\Time;
 use App\Controllers\registration;
 use App\Controllers\FetchData;
 use App\Controllers\login;
+use App\Models\tblAdminLogin;
 use App\Models\tblAdmin;
+use App\Models\tblPatientLogin;
 use App\Models\tblPatient;
+use App\Models\tblPatientVisit;
+use App\Models\tblEmployeeLogin;
 use App\Models\tblEmployee;
+use App\Models\tblMedicine;
+use App\Models\tblUnit;
 
 class Home extends BaseController
 {
@@ -24,49 +30,10 @@ class Home extends BaseController
 
     public function getHome_Page($message=null)
     {
-        // $db_branch=new db_branch();
-        //  $home=new home();
-        // $email=new email();
 
-
-
-        // if ($message==null) {
-        //     // code...
-
-        //     if (isset($_COOKIE['logedIn_data'])) {
-        //         // code...
-
-        //         $data=json_decode($_COOKIE['logedIn_data'],true);
-
-        //         $login_data=$db_login->where('cashier_id',$data['cashier_data']['cashier_id'])->first();
-
-        //         $mydate=$home->date('now');
-
-
-        //         $logOut_data=[
-        //             'is_deleted'=>1,
-        //             'logout_time'=>$mydate
-        //         ];
-
-        //         if ($login_data['is_deleted']==0) {
-        //             // code...
-        //             $db_login->update($login_data['login_id'],$logOut_data);
-
-        //         }
-
-        //     }
-        // }
-
-
-
-        // $branch['branch_data']=$db_branch->findAll();
         $all['session_expires']=$message;
 
-            // $email->send_email('btgavygarvey@gmail.com');
-
         $all['title']='Outpatient Medical Record System';
-
-
 
         echo view('templete/head',$all);
         echo view('index');
@@ -78,12 +45,22 @@ class Home extends BaseController
     function getPages($value=null){
 
         $fetchData=new FetchData();
+        $tblMedicine=new tblMedicine();
+        $home=new home();
+        $login=new login();
+        $tblUnit=new tblUnit();
 
-        // $all['login_data']=$_SESSION['login_data'];
+        $login->get_ip_address();
 
+        $date=$home->getDate('now');
+        $date=$date->toDateString();
 
+        $all=$fetchData->getAdminHomePage();
 
-        $all['dashboard_data']=$fetchData->getAdminHomePage();
+        if (isset($_SESSION['login_data'])) {
+            // code...
+            $all['logedIn_data']=$_SESSION['login_data'];
+        }
 
 
         if (isset($_REQUEST['reg'])) {
@@ -91,8 +68,12 @@ class Home extends BaseController
 
             $all['title']='Registration';
 
-            // $all['header']='Registration';
-            $all['login_data']=$_SESSION['login_data'];
+            if (isset($_SESSION['role']) && $_SESSION['role']=='Receptionist') {
+                // code...
+
+                $all['receptionist']=$_SESSION['role'];
+
+            }
 
 
             if ($_REQUEST['reg']==$value) {
@@ -110,12 +91,13 @@ class Home extends BaseController
             if ($_REQUEST['pass']==$value) {
                 // code...
 
-
                 echo view('templete/head',$all);
                 echo view('sections/password');
                 echo view('templete/foot');exit();
             }
         }
+
+        
 
         if (isset($_REQUEST['anm'])) {
             // code...
@@ -124,7 +106,7 @@ class Home extends BaseController
             $all['action']='add';
 
 
-            if ($_REQUEST['anm']==$_SESSION['code']) {
+            if ($_REQUEST['anm']==$value) {
                 // code...
                 echo view('templete/head',$all);
                 echo view('sections/medicine/medicine');
@@ -138,7 +120,7 @@ class Home extends BaseController
 
             $all['title']='General Medical Report';
 
-            if ($_REQUEST['gmr']==$_SESSION['code']) {
+            if ($_REQUEST['gmr']==$value) {
                 // code...
                 echo view('templete/head',$all);
                 echo view('sections/reports/general-report');
@@ -153,10 +135,11 @@ class Home extends BaseController
             // code...
 
             $all['title']='Staff Members';
-            $all['header']='Staff Members';
+            $ll['icon']='eye';
+            $all['header']='View Staff Members';
             $all['staff']='Staff';
 
-            if ($_REQUEST['tsm']==$_SESSION['code']) {
+            if ($_REQUEST['tsm']==$value) {
                 // code...
 
             }
@@ -166,9 +149,10 @@ class Home extends BaseController
             // code...
 
             $all['title']='Patients';
-            $all['header']='Patients';
+            $ll['icon']='eye';
+            $all['header']='View Patients';
 
-            if ($_REQUEST['tpa']==$_SESSION['code']) {
+            if ($_REQUEST['tpa']==$value) {
                 // code...
             $all['directory']='management/patients/patient';
 
@@ -180,9 +164,10 @@ class Home extends BaseController
             // code...
 
             $all['title']='Doctors';
-            $all['header']='Doctors';
+            $ll['icon']='eye';
+            $all['header']='View Doctors';
 
-            if ($_REQUEST['td']==$_SESSION['code']) {
+            if ($_REQUEST['td']==$value) {
                 // code...
             $all['table']='doctors';
 
@@ -194,9 +179,10 @@ class Home extends BaseController
             // code...
 
             $all['title']='Nurses';
-            $all['header']='Nurses';
+            $ll['icon']='eye';
+            $all['header']='View Nurses';
 
-            if ($_REQUEST['tn']==$_SESSION['code']) {
+            if ($_REQUEST['tn']==$value) {
                 // code...
             $all['table']='nurse';
                 
@@ -204,26 +190,16 @@ class Home extends BaseController
             }
         }
 
-        if (isset($_REQUEST['tlt'])) {
-            // code...
-
-            $all['title']='Lab Technicians';
-            $all['header']='Lab Technicians';
-
-            if ($_REQUEST['tlt']==$_SESSION['code']) {
-                // code...
-                $all['table']='lab_tech';
-
-            }
-        }
+        
 
         if (isset($_REQUEST['tr'])) {
             // code...
 
             $all['title']='Receptionists';
-            $all['header']='Receptionists';
+            $ll['icon']='eye';
+            $all['header']='View Receptionists';
 
-            if ($_REQUEST['tr']==$_SESSION['code']) {
+            if ($_REQUEST['tr']==$value) {
                 // code...
                 $all['table']='receptionist';
 
@@ -231,29 +207,19 @@ class Home extends BaseController
             }
         }
 
-        // if (isset($_REQUEST['tp'])) {
-        //     // code...
-
-        //     $all['title']='Pharmacists';
-        //     $all['header']='Pharmacists';
-
-        //     if ($_REQUEST['tp']==$_SESSION['code']) {
-        //         // code...
-
-
-        //     }
-        // }
+        
 
         if (isset($_REQUEST['tam'])) {
             // code...
 
             $all['title']='Available Medicine';
-            $all['header']='Available Medicine';
+            $ll['icon']='eye';
+            $all['header']='View Available Medicine';
             $all['action']='view';
             $all['expired']='expired';
 
 
-            if ($_REQUEST['tam']==$_SESSION['code']) {
+            if ($_REQUEST['tam']==$value) {
                 // code...
                 $all['directory']='medicine/medicine';
 
@@ -263,13 +229,140 @@ class Home extends BaseController
         if (isset($_REQUEST['tem'])) {
             // code...
 
+
             $all['title']='Expired Medicine';
-            $all['header']='Expired Medicine';
+            $ll['icon']='eye';
+            $all['header']='View Expired Medicine';
             $all['action']='view';
 
-            if ($_REQUEST['tem']==$_SESSION['code']) {
+            if ($_REQUEST['tem']==$value) {
                 // code...
+                $all['medicine_data']=$tblMedicine->where('expiry_date <=',$date)->findAll();
+                if ($all['medicine_data']) {
+                    // code...
+
+                    for ($i=0; $i <count($all['medicine_data']) ; $i++) { 
+                        // code...
+
+                        $all['unit_data'][$i]=$tblUnit->where('unit_id',$all['medicine_data'][$i]['unit_id'])->first();
+                    }
+                }
+
+
                 $all['directory']='medicine/medicine';
+
+            }
+        }
+        $all['dashboard_data']=$all;
+
+        echo view('templete/head',$all);
+        echo view('sections/management/management');
+        echo view('templete/foot');exit();
+
+
+    }
+
+    function getRole_pages($value,$value1=null){
+
+        $fetchData=new FetchData();
+        $tblMedicine=new tblMedicine();
+        $home=new home();
+        $login=new login();
+        $tblUnit=new tblUnit();
+        $tblPatient=new tblPatient();
+        $tblPatientVisit=new tblPatientVisit();
+
+        $date=$home->getDate('now');
+        $date=$date->toDateString();
+
+        $all=$fetchData->getAdminHomePage();
+        
+
+        $all['role_pages']=$_SESSION['role'];
+
+        if ($_SESSION['login_data']) {
+            // code...
+            $all['logedIn_data']=$_SESSION['login_data'];
+        }
+
+
+        if (isset($_REQUEST['nv'])) {
+            // code...
+
+            $all['title']='New Visit';
+            $all['icon']='search'; 
+            $all['header']='Search Patient';
+
+            if ($value1) {
+                // code...
+                $all['action']='view';
+                $all['icon']='eye'; 
+                $all['header']='View Patient Data';
+            }
+
+
+            if ($_REQUEST['nv']==$value) {
+                // code...
+
+                if ($value1) {
+                    // code...
+                    $all['patient_1_data']=$tblPatient->search($value);
+
+                    if ($all['patient_1_data']) {
+                        // code...
+                        if ($all['patient_1_data']['national_id']) {
+                            // code...
+                            $all['patient_national_id']=$all['patient_1_data']['national_id'];
+
+                        }
+                        else if ($all['patient_1_data']['birth_cert']) {
+                            // code...
+                            $all['patient_national_id']=$all['patient_1_data']['birth_cert'];
+
+                        }
+
+                        $all['visit_1_data']=$tblPatientVisit->orderBy('visit_date','DESC')->where('patient_id',$all['patient_1_data']['patient_id'])->first();
+                            
+                    }
+                    else{
+                        $all['patient_national_id']='';
+                    }
+
+                }
+                
+                $file='visit';
+
+            }
+
+            $all['directory']=$_SESSION['role'].'/dashboard/'.$file;
+
+
+            
+        }
+
+        if (isset($_REQUEST['pr'])) {
+            // code...
+
+
+
+            $all['title']='Patients Report';
+            $all['icon']='eye'; 
+            $all['header']='View Patients Data';
+
+            if ($value1) {
+                // code...
+                $all['action']='view';
+                $all['icon']='eye'; 
+                $all['header']='View Patient Data';
+            }
+
+
+            if ($_REQUEST['pr']==$value) {
+                // code...
+                $file='report';
+
+            $all['directory']=$_SESSION['role'].'/dashboard/'.$file;
+
 
             }
         }
@@ -278,6 +371,53 @@ class Home extends BaseController
         echo view('sections/management/management');
         echo view('templete/foot');exit();
 
+
+    }
+
+
+    // PATIENT VISIT
+
+    public function postPatient_Visits($id){
+
+        $tblPatientVisit=new tblPatientVisit();
+        $tblPatient=new tblPatient();
+        $home=new home();
+
+        $date=$home->getDate('now');
+
+        $date=$date->toDateString();
+
+        $patient_exist=$tblPatient->search($id);
+
+        if (!$patient_exist) {
+            // code...
+            echo "<b class='text-danger'>Failled!!!</b> Patient not found!";exit();
+        }
+
+        $visit_exist=$tblPatientVisit->where('visit_date',$date)->where('patient_id',$patient_exist['patient_id'])->first();
+
+
+        if ($visit_exist) {
+            // code...
+            echo "<b class='text-danger'>Failled!!!</b> Patient has today's visit record!";exit();
+        }
+
+
+        $visit_data=[
+            'patient_id'=>$patient_exist['patient_id']
+        ];
+
+        $inserted=$tblPatientVisit->save($visit_data);
+
+        if ($inserted) {
+            // code...
+
+            echo 'New visit recorded successfully';exit();
+        }
+        else{
+            echo "Unknown <b class='text-danger'>error</b> occured! Try again later.";exit();
+
+        }
 
     }
 
@@ -309,7 +449,7 @@ class Home extends BaseController
         }
         else{
             $message="Your session has expired. Login again.";
-            $home->index($message);
+            $home->getHome_Page($message);
         }
 
 
@@ -330,14 +470,43 @@ class Home extends BaseController
     public function getLogout(){
 
         $home=new home();
-        // $tbllogin=new tbllogin();
+        $tblAdminLogin=new tblAdminLogin();
+        $tblPatientLogin=new tblPatientLogin();
+        $tblEmployeeLogin=new tblEmployeeLogin();
 
 
-        // $mydate=$home->getDate('now');
+        $mydate=$home->getDate('now');
 
-        // if (isset($_SESSION['logedIn_data'])) {
+        // if (isset($_SESSION['login_data']) && isset($_SESSION['role'])) {
         //     // code...
-        //     $login_data=$db_login->where('cashier_id',$_SESSION['logedIn_data']['cashier_data']['cashier_id'])->first();
+
+        //     $logOut_data=[
+        //         'is_deleted'=>1,
+        //         'logout_time'=>$mydate
+        //     ];
+            
+
+        //     if ($_SESSION['role']=='Administrator') {
+        //         // code...
+        //         $login_data=$tblAdminLogin->where('admin_id',$_SESSION['login_data']['admin_id'])->first();
+
+        //         $tblAdminLogin->update($login_data['login_id'],$logOut_data);
+
+        //     }
+        //     elseif ($_SESSION['role']=='Patient') {
+        //         // code...
+        //         $login_data=$tblPatientLogin->where('patient_id',$_SESSION['login_data']['patient_id'])->first();
+
+        //         $tblPatientLogin->update($login_data['login_id'],$logOut_data);
+
+        //     }
+        //     else{
+
+        //         $login_data=$tblEmployeeLogin->where('employee_id',$_SESSION['login_data']['employee_id'])->first();
+
+        //         $tblEmployeeLogin->update($login_data['login_id'],$logOut_data);
+
+        //     }
         // }
         // elseif (isset($_COOKIE['logedIn_data'])) {
         //     // code...
@@ -348,15 +517,11 @@ class Home extends BaseController
 
         
 
-        //     $logOut_data=[
-        //         'is_deleted'=>1,
-        //         'logout_time'=>$mydate
-        //     ];
+           
 
-        // $db_login->update($login_data['login_id'],$logOut_data);
 
-        // session_unset();
-        // session_destroy();
+        session_unset();
+        session_destroy();
 
         $message="Logged Out.";
 

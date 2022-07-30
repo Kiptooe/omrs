@@ -1,6 +1,10 @@
+<?php
+echo view('navigation');
+
+?>
 <div class="container ">
 
-<form id='form-register'  method="post" class="bg-info">
+<form id='form-register'  method="post" class="">
 
 <div class="d-block">
 
@@ -25,20 +29,38 @@
 
 
 
+<?php
+if (isset($receptionist)) {
+  // code...
+  ?>
 
+  <?php
+}
+else{
+  ?>
+
+  <?php
+}
+?>
 
   <div id=""class="row col col-lg-5">
   <div class="col col-md-12 form-group">
     <label class="font-weight-bold" for="role_name">Role Name :<span class="star">*</span></label>
     <select class="form-control" name="role_name" id="role_name" onchange ="validate_select(this.value, 'role_error');">
       <option value="">Choose Role</option>
-      <option value="Administrator">Admin</option>
-      <option value="Doctor">Doctor</option>
-      <option value="Nurse">Nurse</option>
-      <option value="Lab Technician">Lab Technician</option>
       <option value="Patient">Patient</option>
-      <option value="Receptionist">Receptionist</option>
-      <!-- <option value="Pharmacist">Pharmacist</option> -->
+      <?php
+        if (!isset($receptionist)) {
+          // code...
+          ?>
+          <option value="Administrator">Admin</option>
+          <option value="Doctor">Doctor</option>
+          <option value="Nurse">Nurse</option>
+          <option value="Receptionist">Receptionist</option>
+          <?php
+        }
+        
+      ?>
       
     </select>
     <code class="text-danger small font-weight-bold float-right" id="role_error" style="display: none;"></code>
@@ -50,7 +72,7 @@
 <div id="identification_type"class="row col col-lg-5" style="display:none">
   <div class="col col-md-12 form-group">
     <label class="font-weight-bold" for="identification">Choose Identification :<span class="star">*</span></label>
-    <select class="form-control" id="identification" name="identification" onchange="identification(this.value,'identification_error');">
+    <select class="form-control" id="identification" name="identification" onchange="identify(this.value);">
       <option value="national_id">National ID</option>
       <option value="birth_certificate">Birth Certificate</option>
     </select>
@@ -68,7 +90,7 @@
 
 <div id="birth_certificate"class="row col col-lg-5" style="display:none">
   <div class="col col-md-12 form-group">
-    <label class="font-weight-bold" for="certificate_no">Enter Certificate No. :<span class="star">*</span></label>
+    <label class="font-weight-bold" for="certificate_no">Enter Birth Certificate No. :<span class="star">*</span></label>
     <input type="text" class="form-control" placeholder="Birth Certificate" name="certificate_no" id="certificate_no" onblur ="validate_identification(this.value, 'birth_certificate_error');" required>
     <code class="text-danger small font-weight-bold float-right" id="birth_certificate_error" style="display: none;"></code>
   </div>
