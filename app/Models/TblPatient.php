@@ -8,20 +8,6 @@ class TblPatient extends Model{
     
 protected $table = 'tbl_patient';
 protected $primaryKey = 'patient_id';
-<<<<<<< HEAD
-protected $allowedfields = ['first_name','last_name','email','password','national_id','gender','role_id','mobile_no','added_by','registered_at','updated_at','is_deleted'];
-
-
-// public function fetchVitals($user = array)
-// {
-    
-// }
-
-
-
-
-
-=======
 protected $allowedFields = ['firstname','lastname','email','password','national_id','gender','mobile_number','registered_at','updated_at','is_deleted','birth_cert'];
 
 protected $beforeInsert=['beforeInsert'];
@@ -114,6 +100,5 @@ protected $beforeInsert=['beforeInsert'];
 
 
     }
->>>>>>> 16c62ee0e9ec5e87317e6caaca1e931b9ed910b2
 
 }

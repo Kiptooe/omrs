@@ -6,13 +6,9 @@ use CodeIgniter\Model;
 
 class TblPrescribedMedicine extends Model
 {
-	protected $DBGroup              = 'default'; // default database group
-  
-    // Change it for other database group
-    // protected $DBGroup  = 'otherDb';
-  
-	protected $table='tbl_prescribed_medicine';
-	protected $primaryKey='prescribed_id';
-	protected $allowedFields=['prescription_id','is_deleted','medicine_id','quantity'];
+	protected $DBGroup              = 'default';
+	protected $table='tbl_medicine_prescription';
+	protected $primaryKey='prescription_id';
+	protected $allowedFields=['visit_id','patient_id','prescribed_by','prescribed_at','is_deleted'];
 
 }

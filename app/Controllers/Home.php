@@ -20,13 +20,6 @@ class Home extends BaseController
    
     //  LANDING PAGE FUNCTION
 
-    public function index()
-    {
-        echo view('Templete/head.php');        
-        echo view('PatientHome.php');
-        echo view('Templete/foot.php');
-    
-    }
 
     public function getHome_Page($message=null)
     {
@@ -56,12 +49,12 @@ class Home extends BaseController
         $date=$date->toDateString();
 
         $all=$fetchData->getAdminHomePage();
+        $all['logedIn_data'] = [];
 
         if (isset($_SESSION['login_data'])) {
             // code...
             $all['logedIn_data']=$_SESSION['login_data'];
         }
-
 
         if (isset($_REQUEST['reg'])) {
             // code...
@@ -78,8 +71,8 @@ class Home extends BaseController
 
             if ($_REQUEST['reg']==$value) {
                 // code...
-                echo view('templete/head',$all);
-                echo view('sections/registration');
+                echo view('templete/head');
+                echo view('sections/registration',$all);
                 echo view('templete/foot');exit();
             }
         }

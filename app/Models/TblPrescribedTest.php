@@ -13,6 +13,6 @@ class TblPrescribedTest extends Model
   
 	protected $table='tbl_prescribed_test';
 	protected $primaryKey='test_id';
-	protected $allowedFields=['patient_id','is_deleted','prescribed_by'];
+	protected $allowedFields=['patient_id','visit_id','is_deleted','prescribed_by'];
 
 }

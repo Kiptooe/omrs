@@ -58,17 +58,6 @@ echo view('navigation');
                 
                   <?php
               }
-<<<<<<< HEAD
-              createSection1('/home/pages?tsm='.$_SESSION['code'], 'Total Staff Members', count($dashboard_data['all_employees_data']));
-              createSection1('/home/pages/?tpa='.$_SESSION['code'], 'Total Patients', count($dashboard_data['patient_data']));
-              createSection1('/home/pages/?td='.$_SESSION['code'], 'Total Doctors', count($dashboard_data['doctors_data']));
-              createSection1('/home/pages/?tn='.$_SESSION['code'], 'Total Nurses', count($dashboard_data['nurse_data']));
-              createSection1('/home/pages/?tlt='.$_SESSION['code'], 'Total Lab Technicians', count($dashboard_data['lab_tech_data']));
-              createSection1('/home/pages/?tr='.$_SESSION['code'], 'Total Receptionists', count($dashboard_data['receptionist_data']));
-              // createSection1('/home/pages/?tp='.$_SESSION['code'], 'Total Pharmacists', count($dashboard_data['doctors_data']));
-              createSection1('/home/pages/?tam='.$_SESSION['code'], 'Total Available Medicine', 0);
-              createSection1('/home/pages/?tem='.$_SESSION['code'], 'Total Expired Medicine',0);
-=======
               createSection1('/home/pages/'.$_SESSION['code'].'?tsm='.$_SESSION['code'], 'Total Staff Members', count($dashboard_data['all_employees_data']));
               createSection1('/home/pages/'.$_SESSION['code'].''.$_SESSION['code'].'?tpa='.$_SESSION['code'], 'Total Patients', count($dashboard_data['patient_data']));
               createSection1('/home/pages/'.$_SESSION['code'].'?td='.$_SESSION['code'], 'Total Doctors', count($dashboard_data['doctors_data']));
@@ -76,7 +65,6 @@ echo view('navigation');
               createSection1('/home/pages/'.$_SESSION['code'].'?tr='.$_SESSION['code'], 'Total Receptionists', count($dashboard_data['receptionist_data']));
               createSection1('/home/pages/'.$_SESSION['code'].'?tam='.$_SESSION['code'], 'Total Available Medicine', count($dashboard_data['medicine_data']));
               createSection1('/home/pages/'.$_SESSION['code'].'?tem='.$_SESSION['code'], 'Total Expired Medicine',count($dashboard_data['expired_medicine_data']));
->>>>>>> 16c62ee0e9ec5e87317e6caaca1e931b9ed910b2
            
             ?>
 
