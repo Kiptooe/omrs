@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use CodeIgniter\Model;
+use App\Models\TblMedicine;
 
 class TblPrescribedMedicineDetails extends Model
 {
@@ -13,14 +14,20 @@ class TblPrescribedMedicineDetails extends Model
 
 	public function fetchMedicine($pid,$vid){
 
+		$tm = new TblMedicine();
+		$medicine = [];
 		$medicine_details = $this->asArray()
 						  ->where('patient_id',$pid)
 						  ->where('visit_id',$vid)
 						  ->findAll();                 
 		for($i=0; $i<count($medicine_details); $i++){
-			$medicine_details[$i] = $medicine_details[$i]['detail_name']; 
+			$medicine_details[$i] = $medicine_details[$i]['medicine_id']; 
+		
+		$medicine[$i] = $tm->fetchMedicine($medicine_details[$i]);
+
 		}
-		return $medicine_details;
+		
+		return $medicine;
 	}
 
 }

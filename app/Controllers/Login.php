@@ -242,12 +242,12 @@ class Login extends Home
         $folder=$_SESSION['role'];
         $_SESSION['folder']=$_SESSION['role'];
 
-            $all['login_data']=$_SESSION['login_data'];
+        $all['login_data']=$_SESSION['login_data'];
 
 
         $all['logedIn_data']=$_SESSION['login_data'];
-
-
+        // $session = session();
+        // $session->set('login_data',$_SESSION['login_data']);
 
         $all['dashboard_data']=$fetchData->getAdminHomePage();
 

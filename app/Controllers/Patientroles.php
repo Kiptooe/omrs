@@ -6,37 +6,47 @@ use App\Models\TblSignSympDetails;
 use App\Models\TblPrescribedTestDetails;
 use App\Models\TblDiagnosis;
 use App\Models\TblPrescribedMedicineDetails;
+use App\Models\TblPatientVisit;
 
 
 
 class Patientroles extends BaseController
 {
-    public function getPage($page)
+    public function getVisits($pid)
     {
-        echo view('/Templete/head.php');        
-        echo view($page);
-        echo view('/Templete/foot.php');
+    $tv = new TblPatientVisit();
+    $visits['visits'] = $tv->fetchVisits($pid);
+    
+    echo view('Templete/head');
+    echo view('Patient\Dashboard/PastVisit',$visits);
+    echo view('Templete/foot');    
     }
-    public function getSummary($page,$pid,$vid)
+    public function getSummary($pid)
     {
+
+        $tv = new TblPatientVisit();
+        $vid = $tv->fetchVisit($pid);
+
         $tv = new TblVitals();
         $summary['vitals'] = $tv->fetchVitals($pid);
 
         $ts = new TblSignSympDetails();
-        $summary['sign_symp_details'] = $ts->fetchSignSympDetails($pid,$vid);
+        $summary['signs_symptoms'] = $ts->fetchSignSympDetails($pid,$vid);
         
         $tt = new TblPrescribedTestDetails();
-        $summary['prescribed_test_details'] = $tt->fetchTestDetails($pid,$vid);
+        $summary['prescribed_tests'] = $tt->fetchTestDetails($pid,$vid);
         
-        $td = new Diagnosis();
+        $td = new TblDiagnosis();
         $summary['diagnosis'] = $td->fetchDiagnosis($pid,$vid);
 
         $tp = new TblPrescribedMedicineDetails();
-        $summary['medicine'] = $tp->fetchMedicine($pid,$vid);
-       
-        print_r($summary);exit;
+        $summary['prescriptions'] = $tp->fetchMedicine($pid,$vid);
 
-        echo view($page,$summary);
+        // $session = session();
+        // $user = $session->get('login_data');
 
+        echo view('Templete/head');
+        echo view('Patient\Dashboard/VisitSummary',$summary);
+        echo view('Templete/foot');
     }
 }

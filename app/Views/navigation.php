@@ -12,7 +12,7 @@
         <image align='left' src="/images/<?= $_SESSION['role']?>.png" alt="<?= $_SESSION['role']?>" width="40px" height="40px">
 
                 <?php
-                echo $logedIn_data['firstname'].' '.$logedIn_data['lastname'];
+                echo $_SESSION['login_data']['firstname'].' '.$_SESSION['login_data']['lastname'];
                 
             }
         ?>

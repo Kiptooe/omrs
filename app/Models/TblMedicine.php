@@ -15,4 +15,12 @@ class TblMedicine extends Model
 	protected $primaryKey='medicine_id';
 	protected $allowedFields=['medicine_name','is_deleted','unit_id','medicine_price','medicine_quantity','expiry_date','updated_at'];
 
+	public function fetchMedicine($mid)
+	{
+		$medicine = $this->asArray()
+						 ->where('medicine_id',$mid)
+						 ->first();
+		return $medicine['medicine_name'];				 	
+	}
+
 }
