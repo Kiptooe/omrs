@@ -44,6 +44,13 @@ echo view('navigation');
 
 
             <?php
+          //    $session = session();
+          //    $confirmation = $session->getFlashdata('vitals-success');
+             
+          //  if($confirmation){
+          //    echo '<div class="alert alert-success">'.$confirmation.'</div>' ;
+          //  }
+
               function createSection2($icon, $location, $title) {
               
                 ?>
@@ -57,8 +64,8 @@ echo view('navigation');
                 </div>
               <?php
             }
-            createSection2('group', '/home/pages/'.$_SESSION['code'].'?reg='.$_SESSION['code'], 'Record Patient Vitals');
-            createSection2('book', '/home/pages/'.$_SESSION['code'].'?pr='.$_SESSION['code'], 'Patient Report');
+            createSection2('group', '/Nurseroles/show/search', 'Search Patient');
+            // createSection2('book', '/home/pages/'.$_SESSION['code'].'?pr='.$_SESSION['code'], 'Patient Report');
            
             ?>
 
@@ -68,7 +75,7 @@ echo view('navigation');
 
           <div class="col col-xs-10 col-sm-10 col-md-10 col-lg-5 " style="padding: 7px 0; margin-left: 5px;">
             <div class="todays-report">
-              <div class="h3 text-primary font-weight-bold">Todays Report</div>
+              <!-- <div class="h3 text-primary font-weight-bold">Todays Report</div> -->
               <table class="table table-bordered table-striped table-hover">
                 <tbody>
                   <?php
@@ -81,8 +88,8 @@ echo view('navigation');
                     <?php
                     }
                     ?>
-                    <th class="bg-success text-light">Total Patient Visit</th>
-                    <th class="bg-info"><?= count($dashboard_data['patient_visit_data']); ?></th>
+                    <!-- <th class="bg-success text-light">Total Patient Visit</th>
+                    <th class="bg-info"></th> -->
                   </tr>
                 </tbody>
               </table>

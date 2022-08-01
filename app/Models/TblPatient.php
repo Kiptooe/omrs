@@ -101,4 +101,25 @@ protected $beforeInsert=['beforeInsert'];
 
     }
 
+    public function searchpatient($id){
+
+    	$patient=$this->asArray()
+            ->where('national_id',$id)
+            ->first();
+
+
+
+        if(!$patient){
+            	
+        return false;
+        
+
+        }
+        else{
+        	return $patient['patient_id'];
+        }
+
+
+    }
+
 }

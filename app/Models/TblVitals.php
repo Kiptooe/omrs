@@ -8,7 +8,7 @@ class TblVitals extends Model{
     
 protected $table = 'tbl_vitals';
 protected $primaryKey = 'vital_id';
-protected $allowedfields = ['patient_id','visit_id','date','systolic_pressure','diastolic_pressure','temperature','weight','role_id','pulse_rate','is_deleted'];
+protected $allowedFields = ['patient_id','visit_id','date','systolic_pressure','diastolic_pressure','temperature','weight','pulse_rate','is_deleted'];
 
 public function fetchVitals($id){
 
@@ -37,5 +37,17 @@ public function fetchVitals($id){
 
                  return $vitals;
 }
+
+    public function recordVitals( array $user)
+    {
+        $this->save($user);
+        // $session = session();
+        // $session->setFlashdata('vitals-success','Vitals Recorded Successfully');
+
+        echo view('templete/head');
+        echo view('Nurse/dashboard/index');
+        echo view('templete/foot');
+
+    }
 
 }
